@@ -121,4 +121,8 @@ body {
     .content {
       padding-left: 0; /* reset left padding when sidebar overlays */
     }
+
+    .toggle-btn:hover {
+        background-color: #840884;
+      }
   }
