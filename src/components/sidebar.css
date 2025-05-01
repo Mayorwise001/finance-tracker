@@ -1,8 +1,9 @@
 /* Sidebar.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Roboto', sans-serif;
   }
   
   .layout {
@@ -37,6 +38,8 @@ body {
     border-bottom: 1px solid #ffffff;
     cursor: pointer;
     width: 100%;
+    font-size: 18px;
+
   }
   
 
@@ -88,7 +91,7 @@ body {
   }
   
   .content {
-    margin-left: 250px;
+    margin-left: 350px;
     padding: 20px;
     transition: margin-left 0.3s;
   }
@@ -119,7 +122,7 @@ body {
         width: 100%;             /* stretch full width */
       }
     .content {
-      padding-left: 0; /* reset left padding when sidebar overlays */
+      padding-left: 10px; /* reset left padding when sidebar overlays */
     }
 
     .toggle-btn:hover {
