@@ -109,7 +109,6 @@ function ETXStats() {
       <div className="ETX-content">
         {/* Left column */}
         <div className="ETX-left">
-          {/* <h1 className="ETX-heading">We’re #1 for a reason…</h1> */}
 
            {/* ⬇️ Added animation classes and ref to heading */}
           <h1

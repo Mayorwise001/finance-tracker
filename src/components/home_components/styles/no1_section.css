@@ -170,7 +170,7 @@ body {
   }
 
     .off-left {
-    transform: translateY(20px); /* Move down instead of left */
+    transform: translateY(50px); /* Move down instead of left */
   }
 
   .slide-in {
