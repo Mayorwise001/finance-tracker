@@ -14,7 +14,7 @@ body {
     width: 250px;
     min-height: 100vh;
     background-color: rgba(108, 92, 231, 0.7); /* semi-transparent purple */
-    background-color: #5723ce;
+  
     color: white;
     padding-top: 60px;
     position: fixed;
@@ -87,7 +87,7 @@ body {
     position: fixed;
     top: 12px;
     left: 10px;
-    background-color: #840884;
+    background-color: #38c172;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -137,6 +137,7 @@ body {
     }
 
     .toggle-btn:hover {
-        background-color: #840884;
+        background-color: #38c172;
+        color: white;;
       }
   }

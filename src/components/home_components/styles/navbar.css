@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+
 /* Shared Styles */
 .logo {
   display: flex;
@@ -70,8 +78,8 @@ z-index: 1000;
   position: fixed;
   top: 12px;
   left: 10px;
-  background-color: #840884;
-  color: white;
+  background-color: #f67706;
+  color: #ffffff;
   padding: 10px 15px;
   border: none;
   cursor: pointer;
@@ -82,7 +90,7 @@ z-index: 1000;
 .sidebar {
   width: 250px;
   min-height: 100vh;
-  background-color: #5723ce;
+  background-color: #133e25;
   color: white;
   padding-top: 60px;
   position: fixed;
@@ -98,7 +106,7 @@ z-index: 1000;
   font-size: 18px;
 }
 .sidebar ul li:hover {
-  background-color: #840884;
+  background-color: #38c172;
 }
 .sidebar-closed .sidebar {
   width: 0;
