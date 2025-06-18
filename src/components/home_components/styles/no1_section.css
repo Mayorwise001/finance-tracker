@@ -160,4 +160,12 @@
     grid-template-columns: 1fr;
     gap: 16px;
   }
+
+    .off-left {
+    transform: translateY(20px); /* Move down instead of left */
+  }
+
+  .slide-in {
+    transform: translateY(0);
+  }
 }
