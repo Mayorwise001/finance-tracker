@@ -1,0 +1,211 @@
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  height: 100vh;
+    /* background: linear-gradient(
+    135deg,
+    #840884 0%,
+    #5b0a91 40%,
+    #2e2fbd 75%,
+    #1e90ff 100%
+  ); */
+    background: linear-gradient(135deg, 
+        #052e16 0%,    /* Dark green */
+        #14532d 30%,    /* Deep green */
+        #166534 50%,   /* Medium green */
+        #22c55e 70%,   /* Vibrant green */
+        #86efac 100%); /* Light green */
+    color: white;
+}
+
+.hero-content {
+  flex: 1 1 500px;
+  max-width: 600px;
+color: white;
+
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+ color: white;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  display: inline-block;
+ background-color: #f67706;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.buybutton{
+  color: #fff;
+  padding: 0.68rem 1.2rem;
+  border-radius:4px;
+  border: solid 2px #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  margin-left: 30px;
+}
+.buybutton:hover{
+  background-color: #c26a1c;
+}
+
+.cta-button:hover {
+  background-color: #c26a1c;
+}
+
+.hero-image {
+  flex: 1 1 400px;
+  text-align: center;
+
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+    margin-top: 45px;
+
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1.2rem;
+    height: auto;
+    text-align: center;
+  }
+
+  .hero-content {
+    flex: 1 1 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-button,
+  .buybutton {
+    display: block;
+    margin: 0.75rem auto;
+    width: 90%;
+    max-width: 280px;
+    text-align: center;
+  }
+
+  .buybutton {
+    margin-left: auto;
+  }
+
+  .hero-image {
+    flex: 1 1 100%;
+    display: block;
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  .hero-image img {
+    width: 90%;
+    max-width: 350px;
+    height: auto;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 978px) {
+  .hero {
+    flex-direction: column;
+    height: auto;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .hero-content {
+    flex: 1 1 100%;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-content p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-button,
+  .buybutton {
+    display: block;
+    margin: 0.75rem auto;
+    width: 90%;
+    max-width: 280px;
+  }
+
+  .hero-image {
+    flex: 1 1 100%;
+    text-align: center;
+    margin-top: 2rem;
+  }
+
+  .hero-image img {
+    width: 85%;
+    max-width: 400px;
+    height: auto;
+  }
+}
+
+
+/* Fade-in from left */
+.fade-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 1s ease-out;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale-in animation for image */
+.scale-in {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 1s ease-out;
+}
+
+.show-scale {
+  opacity: 1;
+  transform: scale(1);
+}

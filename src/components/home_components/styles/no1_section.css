@@ -1,0 +1,163 @@
+.ETX-section {
+  background-color: #fffaf0;
+  padding: 60px 20px;
+  font-family: Arial, sans-serif;
+}
+
+.ETX-content {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+}
+
+.ETX-left {
+  flex: 1;
+  min-width: 300px;
+}
+
+.ETX-heading {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #1b1d65;
+}
+
+.ETX-sub {
+  color: #333;
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+.ETX-paragraph {
+  margin-top: 20px;
+  font-size: 1.1rem;
+  color: #444;
+  max-width: 90%;
+}
+
+.ETX-button {
+  margin-top: 25px;
+  padding: 12px 24px;
+  border: 2px solid #7c83f2;
+  background-color: white;
+  color: #3840c5;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.ETX-button:hover {
+  background-color: #f1f2ff;
+}
+
+.ETX-right {
+  flex: 1;
+  min-width: 300px;
+}
+
+.ETX-sub.slide-in {
+  transition-delay: 0.2s;
+}
+
+.ETX-paragraph.slide-in {
+  transition-delay: 0.4s;
+}
+
+.ETX-button.slide-in {
+  transition-delay: 0.6s;
+}
+
+
+
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.stat-card {
+  background-color: white;
+  border-bottom: 5px solid #38c172;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 25px 20px;
+  text-align: center;
+}
+
+.stat-percent {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #1b1d65;
+}
+
+.stat-description {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #1b1d65;
+}
+
+/* Animation start state: hidden and slightly shifted left */
+.off-left {
+  opacity: 0;                    /* Fully transparent */
+  transform: translateX(-50px);  /* Start 50px to the left */
+  transition: all 0.8s ease-out; /* Smooth transition */
+}
+
+/* Animation end state: fully visible and in place */
+.slide-in {
+  opacity: 1;                    /* Fully visible */
+  transform: translateX(0);      /* Back to original position */
+}
+
+
+/* Initial state: hidden and slightly lower */
+.off-bottom {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out;
+}
+
+/* Final state: visible and back to original position */
+.slide-up {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .ETX-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .ETX-heading {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .ETX-sub {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .ETX-paragraph {
+    font-size: 1rem;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .ETX-button {
+    display: block;
+    margin: 20px auto;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

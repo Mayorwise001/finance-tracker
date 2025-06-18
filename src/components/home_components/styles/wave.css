@@ -1,0 +1,49 @@
+/* WaveBackground.css */
+.wave-section {
+  position: relative;
+  background: #fefaf3;
+  overflow: hidden;
+  height: 400px;
+
+}
+
+.wave-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  z-index: 1;
+}
+
+.image-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 120px;
+  text-align: center;
+}
+
+.main-image {
+  width: 280px;
+  z-index: 3;
+}
+
+.cash {
+  position: absolute;
+  width: 60px;
+  z-index: 4;
+}
+
+.cash-1 {
+  top: 0px;
+  right: 20%;
+  transform: rotate(-10deg);
+}
+
+.cash-2 {
+  top: 0px;
+  left: 25%;
+  transform: rotate(20deg);
+}
