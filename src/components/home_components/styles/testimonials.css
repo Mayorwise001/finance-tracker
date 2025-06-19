@@ -29,6 +29,8 @@ body {
    transition: transform 0.3s ease, box-shadow 0.3s ease;
      animation: fadeInUp 1s ease-in-out;
   animation-fill-mode: both;
+   will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .quote-icon {
