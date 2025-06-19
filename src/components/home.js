@@ -5,6 +5,7 @@ import HeroSection from './home_components/hero'; // Import your HeroSection com
 import YnabStats from './home_components/no1_section';
 import TrustedBy from './home_components/trustedby'; // Import your TrustedBy component
 import Testimonials from './home_components/testimonial';
+import Pricing from './home_components/pricing';
 
 function Home() {
  
@@ -17,6 +18,7 @@ function Home() {
         <YnabStats />
         <TrustedBy />
         <Testimonials/>
+        <Pricing/>
         <MainSection />
         </>
     )

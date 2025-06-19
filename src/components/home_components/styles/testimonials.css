@@ -149,31 +149,6 @@ body {
 }
 
 
-/* Add this to testimonials.css */
-/* @keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-} */
-
-
-/* Stagger animations (optional) */
-/* .testimonial-card:nth-child(1) {
-  animation-delay: 0.2s;
-}
-.testimonial-card:nth-child(2) {
-  animation-delay: 0.4s;
-}
-.testimonial-card:nth-child(3) {
-  animation-delay: 0.6s;
-} */
-
-
 .testimonial-card:hover {
   transform: translateY(5px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);

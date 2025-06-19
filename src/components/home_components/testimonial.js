@@ -155,7 +155,7 @@ import './styles/testimonials.css';
 
 const testimonials = [
   {
-    name: 'Kathryn',
+    name: 'Aisha',
     since: 'ETX since 2015',
     highlight: 'I realized that money was a tool that would help me create my dream life.',
     text: 'ETX truly helped me buy freedom from a toxic relationship, the flexibility to spend time with my kids, and the ability to pursue my biggest dreams.',
@@ -163,7 +163,7 @@ const testimonials = [
     color: '#a3e635',
   },
   {
-    name: 'Kyle',
+    name: 'Femi',
     since: 'ETX since 2020',
     highlight: 'I went from living paycheck to paycheck, to having N42K saved in one year.',
     text: 'ETX has removed the stress of money from my life and in doing so has helped make me a better husband. It\'s like I got to remove a personal flaw I had never been able to fix.',
@@ -171,7 +171,7 @@ const testimonials = [
     color: '#a3e635',
   },
   {
-    name: 'Wave',
+    name: 'Folake',
     since: 'ETX since 2015',
     highlight: 'I slayed N30K of debt, reclaimed my freedom, and now I’m living wild and free.',
     text: 'I now live a life of empowered spending and am headed for an early retirement, knowing I’ll never have to compromise my values for a paycheck.',
