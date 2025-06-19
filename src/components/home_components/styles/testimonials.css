@@ -150,7 +150,7 @@ body {
 
 
 /* Add this to testimonials.css */
-@keyframes fadeInUp {
+/* @keyframes fadeInUp {
   0% {
     opacity: 0;
     transform: translateY(40px);
@@ -159,11 +159,11 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
-}
+} */
 
 
 /* Stagger animations (optional) */
-.testimonial-card:nth-child(1) {
+/* .testimonial-card:nth-child(1) {
   animation-delay: 0.2s;
 }
 .testimonial-card:nth-child(2) {
@@ -171,7 +171,7 @@ body {
 }
 .testimonial-card:nth-child(3) {
   animation-delay: 0.6s;
-}
+} */
 
 
 .testimonial-card:hover {
@@ -179,3 +179,31 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   cursor: pointer;
 }
+
+/* Initial hidden state */
+.slide-in-left-init {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: all 0.8s ease-out;
+}
+
+/* Final visible state after scroll */
+.slide-in-left-active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+/* 
+    .off-left {
+    transform: translateY(50px); /* Move down instead of left */
+  /* }
+
+  .slide-in {
+    transform: translateY(0); */
+  
+}
+/* } */ 
