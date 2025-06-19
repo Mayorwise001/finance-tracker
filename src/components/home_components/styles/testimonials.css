@@ -197,13 +197,18 @@ body {
 
 /* Responsive behavior */
 @media (max-width: 768px) {
-/* 
-    .off-left {
-    transform: translateY(50px); /* Move down instead of left */
-  /* }
+/* Initial hidden state */
+.slide-in-left-init {
+  opacity: 0;
+  transform: translateX(-60px);
+  transition: all 0.8s ease-out;
+}
 
-  .slide-in {
-    transform: translateY(0); */
+/* Final visible state after scroll */
+.slide-in-left-active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
   
 }
-/* } */ 
