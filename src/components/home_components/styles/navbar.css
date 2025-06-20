@@ -92,18 +92,20 @@ z-index: 1000;
   min-height: 100vh;
   background-color: #133e25;
   color: white;
-  padding-top: 60px;
+  padding-top: 90px;
   position: fixed;
   left: 0;
   top: 0;
   transition: all 0.3s ease;
   z-index: 999;
   overflow: hidden;
+  
 }
 .sidebar ul li {
   padding: 15px 20px;
   border-bottom: 1px solid #fff;
   font-size: 18px;
+ 
 }
 .sidebar ul li:hover {
   background-color: #38c172;

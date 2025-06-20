@@ -6,6 +6,8 @@ import YnabStats from './home_components/no1_section';
 import TrustedBy from './home_components/trustedby'; // Import your TrustedBy component
 import Testimonials from './home_components/testimonial';
 import Pricing from './home_components/pricing';
+import Footers from './home_components/footer';
+import ScrollToTopButton from './home_components/scrolltotop';
 
 function Home() {
  
@@ -19,7 +21,9 @@ function Home() {
         <TrustedBy />
         <Testimonials/>
         <Pricing/>
-        <MainSection />
+        {/* <MainSection /> */}
+        <ScrollToTopButton/>
+        <Footers/>
         </>
     )
 

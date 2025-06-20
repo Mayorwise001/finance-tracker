@@ -5,7 +5,9 @@ body {
     font-family: 'Roboto', sans-serif;
   }
   
-
+.trust{
+  background-color: #ffffff;
+}
 
 .trusted-section {
   text-align: center;

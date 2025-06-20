@@ -7,11 +7,10 @@ const Pricing = () => {
     // Define the data for each pricing plan
     const pricingPlans = [
         {
-            name: "Simple Start",
+            name: "Free Trial",
             description: "Get your business off to a strong start",
-            originalPrice: "$35",
-            currentPrice: "$3.50/mo",
-            saveText: "Save 90% for 3 months*",
+            currentPrice: "Free",
+            saveText: "Free trial for 1 month",
             benefits: [
                 "1 user",
                 "Maximize tax deductions",
@@ -24,8 +23,8 @@ const Pricing = () => {
         {
             name: "Essentials",
             description: "Organize your books and grow your business",
-            originalPrice: "$55",
-            currentPrice: "$6.50/mo",
+            originalPrice: "N7500",
+            currentPrice: "N6000.00/mo",
             saveText: "Save 90% for 3 months*",
             benefits: [
                 "Everything in Simple Start",
@@ -38,8 +37,8 @@ const Pricing = () => {
         {
             name: "Plus",
             description: "Drive sustainable growth and profitability",
-            originalPrice: "$99",
-            currentPrice: "$9.90/mo",
+            originalPrice: "N10500",
+            currentPrice: "N9000.00/mo",
             saveText: "Save 90% for 3 months*",
             benefits: [
                 "Everything in Essentials",
@@ -54,8 +53,8 @@ const Pricing = () => {
         {
             name: "Advanced",
             description: "Unlock insights and boost efficiency",
-            originalPrice: "$235",
-            currentPrice: "$23.50/mo",
+            originalPrice: "N24500",
+            currentPrice: "N23000.00/mo",
             saveText: "Save 90% for 3 months*",
             benefits: [
                 "Everything in Plus",
@@ -73,7 +72,12 @@ const Pricing = () => {
 
     return (
         // The main container and layout classes now refer to custom CSS
-        <div className="bg-gray-50 flex justify-center items-center min-h-screen p-5">
+        <>
+        <div id="pricing">
+
+        </div>
+        <div className="bg-gray-50 flex justify-center items-center min-h-screen p-5" >
+                 <h2  className="pricing-title">Pricing</h2>
             <div className="container">
                 <div className="grid-layout">
                     {/* Map through the pricing plans to render each card */}
@@ -83,6 +87,7 @@ const Pricing = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

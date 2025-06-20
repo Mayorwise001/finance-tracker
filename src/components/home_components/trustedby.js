@@ -14,7 +14,7 @@ const companies = [
 const TrustedBy = () => {
   return (
     <div className="trusted-section">
-      <h2>Trusted by:</h2>
+      <h2 className='trust'>Trusted by:</h2>
       <div className="trusted-logos">
         {companies.map((company, index) => (
           <div className="trusted-logo-item" key={index}>
