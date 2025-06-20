@@ -41,7 +41,7 @@ body {
     transition: opacity 0.3s ease;
   }
   
-
+  
   .link-clean {
     color: inherit;           /* Use the surrounding text color */
     text-decoration: none;    /* Remove underline */

@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+  }
+
 .footer-container {
   /* background-color: #1c7441; */
 
@@ -35,11 +42,11 @@
 .footer-section ul {
   list-style: none;
   padding: 0;
-    margin-top: 28px;
+  
 }
 
 .footer-section ul li {
-  margin-top: 8px;
+  margin-bottom: 8px;
   
 }
 
@@ -50,7 +57,10 @@
 }
 
 .footer-section ul li a:hover {
-  color: #a3e635;
+  color: #ffffff;
+  background-color: #f67706;
+  padding: 7px;
+  border-radius: 10px;
 }
 
 .social-icons a {
@@ -72,6 +82,10 @@
   line-height: 1.4;
 }
 
+.footer-section.copyright{
+    margin-top: 50px;
+    text-align: center;
+}
 /* Responsive */
 @media (max-width: 768px) {
   .footer-content {
