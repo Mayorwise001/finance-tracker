@@ -1,0 +1,139 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styles/signup.css';
+import { FaEye, FaEyeSlash, FaCog } from 'react-icons/fa';
+
+const Signup = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: '',
+    username: '',
+    firstName: '',
+    lastName: '',
+    password: '',
+    confirmPassword: ''
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState({ message: '', success: null });
+
+  const passwordCriteria = {
+    hasUppercase: /[A-Z]/.test(formData.password),
+    hasLowercase: /[a-z]/.test(formData.password),
+    hasNumber: /[0-9]/.test(formData.password),
+    hasSymbol: /[!@#$%^&*]/.test(formData.password),
+    minLength: formData.password.length >= 6
+  };
+
+  const allValid = Object.values(passwordCriteria).every(Boolean);
+
+  const handleChange = e => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setStatus({ message: '', success: null });
+  };
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      return setStatus({ message: 'Passwords do not match', success: false });
+    }
+
+    if (!allValid) {
+      return setStatus({ message: 'Password does not meet requirements.', success: false });
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch('https://your-api-url/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || 'Signup failed');
+      }
+
+      setStatus({ message: 'Signup successful!', success: true });
+      setTimeout(() => navigate('/login'), 2000);
+    } catch (error) {
+      setStatus({ message: error.message, success: false });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="auth-container">
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <h2>Create Account</h2>
+
+        <div className="form-row">
+          <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} required />
+          <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} required />
+        </div>
+
+        <input type="text" name="username" placeholder="Username" value={formData.username} onChange={handleChange} required />
+        <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required />
+
+        <div className="password-group">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <span onClick={() => setShowPassword(!showPassword)} className="toggle-password">
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+
+        <div className="password-group">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div className="password-checklist">
+          <p className={passwordCriteria.minLength ? 'valid' : ''}>✔ At least 6 characters</p>
+          <p className={passwordCriteria.hasUppercase ? 'valid' : ''}>✔ Uppercase letter</p>
+          <p className={passwordCriteria.hasLowercase ? 'valid' : ''}>✔ Lowercase letter</p>
+          <p className={passwordCriteria.hasNumber ? 'valid' : ''}>✔ Number</p>
+          <p className={passwordCriteria.hasSymbol ? 'valid' : ''}>✔ Symbol (!@#$...)</p>
+        </div>
+
+        {status.message && (
+          <div className={`status-message ${status.success ? 'success' : 'error'}`}>
+            {status.message}
+          </div>
+        )}
+
+        <button type="submit" disabled={loading}>
+          {loading ? (
+            <span className="loading">
+              <FaCog className="spin" /> Creating Account...
+            </span>
+          ) : (
+            'Sign Up'
+          )}
+        </button>
+
+        <p className="auth-switch">
+          Already have an account? <span onClick={() => navigate('/login')}>Login</span>
+        </p>
+      </form>
+    </div>
+  );
+};
+
+export default Signup;

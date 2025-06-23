@@ -1,0 +1,165 @@
+/* signup.css */
+
+.auth-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fffaf0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.auth-form {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 440px;
+  text-align: center;
+}
+
+.auth-form h2 {
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #1a202c;
+}
+
+.auth-form input {
+  width: 94%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.form-row input {
+  width: 100%;
+}
+
+.password-group {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #718096;
+  font-size: 1.1rem;
+}
+
+.password-checklist {
+  text-align: left;
+  font-size: 0.85rem;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  color: #718096;
+}
+
+.password-checklist p {
+  margin: 4px 0;
+}
+
+.password-checklist .valid {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.status-message {
+  padding: 12px;
+  margin-top: 15px;
+  text-align: center;
+  font-weight: 500;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.status-message.success {
+  background-color: #38a169;
+  color: white;
+}
+
+.status-message.error {
+  background-color: #e53e3e;
+  color: white;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background-color: #1c7441;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: #05926c;
+}
+
+button[type="submit"]:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.auth-switch {
+  margin-top: 16px;
+  font-size: 0.95rem;
+  color: #4a5568;
+}
+
+.auth-switch span {
+  color: #1a73e8;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.auth-switch span:hover {
+  text-decoration: underline;
+}
+
+/* Responsive styles */
+@media (max-width: 480px) {
+  .auth-form {
+    padding: 24px;
+  }
+
+  .auth-form h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+}

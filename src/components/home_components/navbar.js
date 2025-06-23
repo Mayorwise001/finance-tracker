@@ -26,7 +26,7 @@ const Navbar = () => {
           <li><Link to="/" className="link-clean">Home</Link></li>
           <li><a href="#pricing" className="link-clean">Pricing</a></li>
           <li><a href="#testimonial" className="link-clean">Testimonials</a></li>
-          <li><a href="#login" className="link-clean">Login</a></li>
+           <li onClick={closeSidebar}><Link to="/login" className="link-clean">Login</Link></li>
           <li><a href="#signup" className="link-clean">Sign Up</a></li>
         </ul>
       </nav>
@@ -40,8 +40,8 @@ const Navbar = () => {
             <li onClick={closeSidebar}><Link to="/" className="link-clean">Home</Link></li>
             <li onClick={closeSidebar}><a href="#pricing" className="link-clean">Pricing</a></li>
             <li onClick={closeSidebar}><a href="#testimonial" className="link-clean">Testimonials</a></li>
-            <li onClick={closeSidebar}><a href="#login" className="link-clean">Login</a></li>
-            <li onClick={closeSidebar}><a href="#signup" className="link-clean">Sign Up</a></li>
+            <li onClick={closeSidebar}><Link to="/login" className="link-clean">Login</Link></li>
+            <li onClick={closeSidebar}><Link to="/signup" className="link-clean">Sign Up</Link></li>
           </ul>
         </div>
       </div>
