@@ -1,7 +1,7 @@
 /* signup.css */
 
 .auth-container {
-  height: 100vh;
+  height: 110vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,6 +44,8 @@
   width: 100%;
 }
 
+
+
 .password-group {
   position: relative;
 }
@@ -78,6 +80,7 @@
 .status-message {
   padding: 12px;
   margin-top: 15px;
+  margin-bottom: 15px;
   text-align: center;
   font-weight: 500;
   border-radius: 6px;
@@ -162,4 +165,27 @@ button[type="submit"]:disabled {
   .form-row {
     flex-direction: column;
   }
+}
+
+
+
+.logo-img2 {
+  height: 40px;
+  width: auto;
+  margin-top: 90px;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  color: #1a202c;
+  margin: 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+.logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* optional spacing */
 }

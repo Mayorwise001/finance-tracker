@@ -50,6 +50,10 @@ const Login = () => {
 
     <div className="login-container">
       <form className="login-box" onSubmit={handleLogin}>
+        <div className=".logo-wrapper">
+  <img src="./NewLogo.png" alt="Logo" className="logo-img" />
+  <h2 className="logo-text">Expense Tracker Expert</h2>
+</div>
         <h2>Welcome Back</h2>
         <p>Please login to continue</p>
 

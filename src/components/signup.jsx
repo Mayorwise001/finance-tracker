@@ -69,8 +69,11 @@ const Signup = () => {
   return (
     <div className="auth-container">
       <form className="auth-form" onSubmit={handleSubmit}>
+        <div className=".logo-wrapper">
+  <img src="./NewLogo.png" alt="Logo" className="logo-img2" />
+  <h2 className="logo-text">Expense Tracker Expert</h2>
+</div>
         <h2>Create Account</h2>
-
         <div className="form-row">
           <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} required />
           <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} required />

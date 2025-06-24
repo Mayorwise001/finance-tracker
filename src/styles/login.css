@@ -23,6 +23,7 @@
 .login-box h2 {
   font-weight: 600;
   margin-bottom: 8px;
+  margin-top:8px;
   color: #1a202c;
 }
 
@@ -117,18 +118,12 @@
   font-size: 1.1rem;
 }
 
-
-
-
 .button-row {
   display: flex;
   justify-content: space-between;
   gap: 10px;
   margin-top: 20px;
 }
-
-
-
 
 .login-button:disabled {
   background-color: #a0aec0;
@@ -167,4 +162,25 @@
 .status-message.error {
   background-color: #e53e3e; /* Red */
   color: white;
+}
+
+
+.logo-img {
+  height: 40px;
+  width: auto;
+}
+
+.logo-text {
+  font-size: 1.2rem;
+  color: #1a202c;
+  margin: 0;
+  font-weight: 600;
+  text-align: center;
+}
+
+.logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px; /* optional spacing */
 }
