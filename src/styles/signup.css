@@ -165,6 +165,9 @@ button[type="submit"]:disabled {
   .form-row {
     flex-direction: column;
   }
+.auth-container {
+  height: 90vh;
+}
 }
 
 
