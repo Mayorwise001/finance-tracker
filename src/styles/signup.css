@@ -1,7 +1,7 @@
 /* signup.css */
 
 .auth-container {
-  height: 110vh;
+  height: 130vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,7 +172,6 @@ button[type="submit"]:disabled {
 .logo-img2 {
   height: 40px;
   width: auto;
-  margin-top: 50px;
 }
 
 .logo-text {
