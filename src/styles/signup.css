@@ -166,7 +166,7 @@ button[type="submit"]:disabled {
     flex-direction: column;
   }
 .auth-container {
-  height: 90vh;
+  height: 109vh;
 }
 }
 
