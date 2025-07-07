@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import '../styles/login.css';
 import { FaEye, FaEyeSlash,FaCog } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-
+import { redirect, useNavigate } from 'react-router-dom';
+import Footers from '../components/home_components/footer'; // Adjust the import path as necessary
+import Navbar from '../components/home_components/navbar'; // Import your Navbar component
 
 const Login = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Login = () => {
 
     try {
       // Replace this with your API endpoint
-      const response = await fetch('https://yourapi.com/login', {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -33,21 +34,35 @@ const Login = () => {
       if (!response.ok) throw new Error('Invalid credentials');
 
       const data = await response.json();
-      setStatusMessage('Login Successful!');
+      // setStatusMessage('Login Successful!');
+      // setTimeout(() => {
+      //   navigate('/'); // Redirect to a protected page
+      // }, 1500);
+          // Delay status message to allow spinner to spin first
+    setTimeout(() => {
+      setStatusMessage('Login successful!');
+      localStorage.setItem('token', data.token);
+
+      setLoading(false);  // Stop spinner after showing success
       setTimeout(() => {
-        navigate('/dashboard'); // Redirect to a protected page
-      }, 1500);
+        // navigate('/home');
+        navigate('/sidebar');
+      }, 1100); // Delay redirect slightly for message to show
+    }, 1100); // Adjust this delay (ms) to match your desired spinner duration
+      // Optionally, you can store the token in localStorage or context
     } catch (err) {
+    // Delay error message
+    setTimeout(() => {
       setError(true);
       setStatusMessage('Login Failed. Please check your credentials.');
-    } finally {
       setLoading(false);
-    }
+    }, 1000);
+  }
   };
 
   return (
     <>
-
+    <Navbar />
     <div className="login-container">
       <form className="login-box" onSubmit={handleLogin}>
         <div className=".logo-wrapper">
@@ -106,7 +121,7 @@ const Login = () => {
 
 {statusMessage && (
   <p
-    className={`status-message ${statusMessage === 'Login successful' ? 'success' : 'error'}`}
+    className={`status-message ${statusMessage === 'Login successful!' ? 'success' : 'error'}`}
   >
     {statusMessage}
   </p>
@@ -115,6 +130,8 @@ const Login = () => {
 
       </form>
     </div>
+
+       <Footers/>
     </>
   );
 };

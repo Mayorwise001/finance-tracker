@@ -27,7 +27,7 @@ const Navbar = () => {
           <li><a href="#pricing" className="link-clean">Pricing</a></li>
           <li><a href="#testimonial" className="link-clean">Testimonials</a></li>
            <li onClick={closeSidebar}><Link to="/login" className="link-clean">Login</Link></li>
-          <li><a href="#signup" className="link-clean">Sign Up</a></li>
+            <li><Link to="/signup" className="link-clean">Sign Up</Link></li>      
         </ul>
       </nav>
 

@@ -1,32 +1,5 @@
-// import React from "react";
-// import "./styles/hero.css"; // Import the styles for the hero section
-
-// const HeroSection = () => {
-//   return (
-//     <section className="hero">
-//       <div className="hero-content">
-//         <h1>How will you spend your money life?</h1>
-//         <p>Create a friendly, flexible plan and spend it well with ETX.</p>
-//         <a href="#" className="cta-button">
-//           Start Your Free Trial
-//         </a>
-//         <a href="#" className="buybutton">
-//          Buy now and save
-//         </a>
-//       </div>
-//       <div className="hero-image">
-//     <img src="./hero3-removebg-preview.png" alt="Finance App Illustration" />
-
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default HeroSection;
-
-
-
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState} from "react";
+import { Link } from 'react-router-dom';
 import "./styles/hero.css"; // Import the styles for the hero section
 
 const HeroSection = () => {
@@ -68,10 +41,10 @@ const HeroSection = () => {
       >
         <h1>How will you spend your money life?</h1>
         <p>Create a friendly, flexible plan and spend it well with ETX.</p>
-        <a href="#" className="cta-button">
-          Start Your Free Trial
-        </a>
-        <a href="#" className="buybutton">
+        <Link to="/login" className="cta-button">
+        Start Your Free Trial
+      </Link>
+        <a href="#pricing" className="buybutton">
           Buy now and save
         </a>
       </div>

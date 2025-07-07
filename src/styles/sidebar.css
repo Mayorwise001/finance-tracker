@@ -121,3 +121,167 @@ body {
         color: white;;
       }
   }
+
+
+
+  /* added link for the sidebar */
+
+
+  .dialog-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 999;
+}
+
+.dialog-box {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.dialog-box h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.dialog-box label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.dialog-box input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.dialog-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.save-btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  /* Responsive grid: 1 column on small screens, more on larger */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.grid-card {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-actions svg {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.edit-icon {
+  color: #2196f3;
+}
+
+.save-icon {
+  color: #4caf50;
+}
+
+.delete-icon {
+  color: #f44336;
+}
+
+.add-expense-icon {
+  color: #009688;
+  font-size: 1.8rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+
+.expense-label {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.expense-section {
+  margin-top: 10px;
+}
+
+.expense-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.expense-input {
+  flex: 1;
+  padding: 4px 8px;
+  margin-right: 5px;
+}
+
+.expense-label {
+  color: maroon;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.expense-delete-icon {
+  color: red;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 5px;
+}
+
+/* .summary p {
+  color: maroon;
+  font-weight: bold;
+} */
+
+
+
+
+/* Optional: Add smooth responsiveness for larger screens */
+@media (min-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
+  }
+}

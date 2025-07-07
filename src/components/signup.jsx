@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/signup.css';
 import { FaEye, FaEyeSlash, FaCog } from 'react-icons/fa';
+import Navbar from '../components/home_components/navbar'; // Import your Navbar component
+import Footers from '../components/home_components/footer'; // Adjust the import path as necessary
+
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -32,41 +35,45 @@ const Signup = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setStatus({ message: '', success: null });
   };
+const handleSubmit = async e => {
+  e.preventDefault();
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  if (formData.password !== formData.confirmPassword) {
+    return setStatus({ message: 'Passwords do not match', success: false });
+  }
 
-    if (formData.password !== formData.confirmPassword) {
-      return setStatus({ message: 'Passwords do not match', success: false });
+  if (!allValid) {
+    return setStatus({ message: 'Password does not meet requirements.', success: false });
+  }
+
+  setLoading(true);
+  try {
+    const res = await fetch('http://localhost:5000/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.message || 'Signup failed');
     }
 
-    if (!allValid) {
-      return setStatus({ message: 'Password does not meet requirements.', success: false });
-    }
+    setStatus({ message: 'Signup successful!', success: true });
+    setTimeout(() => navigate('/login'), 2000);
+  } catch (error) {
+    setStatus({ message: error.message, success: false });
+  } finally {
+    setLoading(false);
+  }
+};
 
-    setLoading(true);
-    try {
-      const res = await fetch('https://your-api-url/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message || 'Signup failed');
-      }
 
-      setStatus({ message: 'Signup successful!', success: true });
-      setTimeout(() => navigate('/login'), 2000);
-    } catch (error) {
-      setStatus({ message: error.message, success: false });
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
+<>
+       <Navbar />
     <div className="auth-container">
       <form className="auth-form" onSubmit={handleSubmit}>
         <div className=".logo-wrapper">
@@ -136,6 +143,8 @@ const Signup = () => {
         </p>
       </form>
     </div>
+    <Footers/>
+    </>
   );
 };
 
