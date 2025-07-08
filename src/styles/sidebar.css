@@ -265,10 +265,43 @@ body {
   margin-left: 5px;
 }
 
-/* .summary p {
+.summary p {
   color: maroon;
   font-weight: bold;
-} */
+}
+
+
+.expense-label {
+  color: maroon;
+  margin: 4px 0;
+}
+
+.income-text {
+  color: green;
+  font-weight: bold;
+}
+
+.balance-text.positive {
+  color: green;
+  font-weight: bold;
+}
+
+.balance-text.negative {
+  color: maroon;
+  font-weight: bold;
+}
+
+.expense-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.expense-input {
+  padding: 4px 6px;
+  flex: 1;
+}
 
 
 

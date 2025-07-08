@@ -11,17 +11,11 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  min-width: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
   flex-wrap: wrap;
   height: 100vh;
-    /* background: linear-gradient(
-    135deg,
-    #840884 0%,
-    #5b0a91 40%,
-    #2e2fbd 75%,
-    #1e90ff 100%
-  ); */
+
     background: linear-gradient(135deg, 
         #052e16 0%,    /* Dark green */
         #14532d 30%,    /* Deep green */

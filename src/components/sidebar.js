@@ -32,6 +32,24 @@ const Sidebar = () => {
     endDate: ''
   });
 
+const formatCurrency = (amount) => {
+  const number = parseFloat(amount || 0);
+  return number.toLocaleString('en-NG', {
+    style: 'currency',
+    currency: 'NGN',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  });
+};
+
+const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
+  const updated = [...entries];
+  updated[entryIndex].expenses[expenseIndex][field] = value;
+  setEntries(updated);
+};
+
+
+
 // Handle screen resize for sidebar toggle
   useEffect(() => {
     const handleResize = () => {
@@ -78,7 +96,8 @@ const Sidebar = () => {
       {
         ...formData,
         income: '',
-        expenses: [],
+        // expenses: [],
+        expenses: [{ label: '', amount: '' }],
         editing: false, // Not editing by default
         original: {}
       }
@@ -98,18 +117,15 @@ const Sidebar = () => {
      toast.success('Entry deleted.');
   };
 
-  // New: toggle editing mode per card
-  // const toggleEdit = (index) => {
-  //   const updated = [...entries];
-  //   updated[index].editing = !updated[index].editing; // Toggle edit state
-  //   setEntries(updated);
-  // };
+
 
   const toggleEdit = (index) => {
     const updated = [...entries];
     updated[index].editing = true;
-    // updated[index].original = { ...updated[index] }; // Save original state
-    // Deep copy the original state (especially expenses array)
+      // Convert string expenses to object format if needed
+  updated[index].expenses = updated[index].expenses.map((exp) =>
+    typeof exp === 'string' ? { label: '', amount: exp } : exp
+  );
   updated[index].original = {
     title: updated[index].title,
     startDate: updated[index].startDate,
@@ -170,7 +186,7 @@ JSON.stringify(original.expenses || []) !== JSON.stringify(current.expenses || [
     // setEntries(updated);
 
       const updated = [...entries];
-  updated[index].expenses.push('');
+  updated[index].expenses.push({ label: '', amount: '' });
   setEntries(updated);
   toast.info('New expense field added.');
   };
@@ -193,7 +209,8 @@ JSON.stringify(original.expenses || []) !== JSON.stringify(current.expenses || [
   };
 
   const calculateExpenseTotal = (expenses) => {
-    return expenses.reduce((acc, val) => acc + (parseFloat(val) || 0), 0);
+    // return expenses.reduce((acc, exp) => acc + (parseFloat(exp.amount) || 0), 0);
+    return expenses.reduce((acc, exp) => acc + (parseFloat(exp.amount) || 0), 0);
   };
 
 const deleteExpense = (entryIndex, expenseIndex) => {
@@ -405,13 +422,27 @@ export default Sidebar; */}
                   />
                 ) : entry.endDate}</p>
 
-                <p><strong>Income:</strong> {entry.editing ? (
+                {/* <p><strong>Income:</strong> {entry.editing ? (
                   <input
                     type="number"
                     value={entry.income}
                     onChange={(e) => handleFieldChange(index, 'income', e.target.value)}
                   />
-                ) : `₦${entry.income || 0}`}</p>
+                ) : `₦${entry.income || 0}`}</p> */}
+
+
+<p className="income-text">
+  <strong>Income:</strong> {entry.editing ? (
+    <input
+      type="number"
+      value={entry.income}
+      onChange={(e) => handleFieldChange(index, 'income', e.target.value)}
+    />
+  ) : (
+    <>↑ <span>{formatCurrency(entry.income)}</span></>
+  )}
+</p>
+
 
                 <div className="expense-section">
                   <strong>Expenses:</strong>
@@ -440,7 +471,7 @@ export default Sidebar; */}
 ))} */}
 
 
-{entry.expenses.map((exp, expIndex) => {
+{/* {entry.expenses.map((exp, expIndex) => {
   // Hide empty expense fields when not editing
   if (!entry.editing && !exp) return null;
 
@@ -465,9 +496,48 @@ export default Sidebar; */}
       )}
     </div>
   );
+})} */}
+
+
+{entry.expenses.map((exp, expIndex) => {
+  if (!entry.editing && (!exp.label || !exp.amount)) return null;
+
+  return (
+    <div key={expIndex} className="expense-row">
+      {entry.editing ? (
+        <>
+          <input
+            type="text"
+            placeholder="Label"
+            value={exp.label}
+            onChange={(e) =>
+              handleExpenseFieldChange(index, expIndex, 'label', e.target.value)
+            }
+            className="expense-input"
+          />
+          <input
+            type="number"
+            placeholder="Amount"
+            value={exp.amount}
+            onChange={(e) =>
+              handleExpenseFieldChange(index, expIndex, 'amount', e.target.value)
+            }
+            className="expense-input"
+          />
+          <DeleteIcon
+            className="expense-delete-icon"
+            onClick={() => deleteExpense(index, expIndex)}
+            titleAccess="Delete Expense"
+          />
+        </>
+      ) : (
+        <p className="expense-label">
+          ↓ {exp.label}: <span>{formatCurrency(exp.amount)}</span>
+        </p>
+      )}
+    </div>
+  );
 })}
-
-
 
 
                   {entry.editing && (
@@ -481,7 +551,11 @@ export default Sidebar; */}
 
                 <div className="summary">
                   <p><strong>Total Expenses:</strong> ₦{totalExpenses}</p>
-                  <p><strong>Balance:</strong> ₦{(parseFloat(entry.income || 0) - totalExpenses)}</p>
+                  {/* <strong>Balance:</strong> ₦{(parseFloat(entry.income || 0) - totalExpenses)} */}
+                  <p className={`balance-text ${parseFloat(entry.income || 0) - totalExpenses < 0 ? 'negative' : 'positive'}`}>
+  <strong>Balance:</strong> {formatCurrency(parseFloat(entry.income || 0) - totalExpenses)}
+</p>
+
                 </div>
               </div>
             );
