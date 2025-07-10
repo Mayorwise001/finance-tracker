@@ -14,6 +14,25 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'; // Fanc
 import SaveIcon from '@mui/icons-material/Save';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import Tooltip from '@mui/material/Tooltip';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import HomeIconCategory from '@mui/icons-material/Home';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import CategoryIcon from '@mui/icons-material/Category';
+import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from 'recharts';
+
+
+
+
+
+
+
+
+
 
 
 const Sidebar = () => {
@@ -49,6 +68,10 @@ const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
 };
 
 
+  const [categories, setCategories] = useState([
+    "Food", "Transport", "Utilities", "Entertainment", "Health", "Education", "Others"
+  ]);
+
 
 // Handle screen resize for sidebar toggle
   useEffect(() => {
@@ -79,14 +102,6 @@ const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // New: Save entry and hide dialog
-  // const handleSave = () => {
-  //   setEntries([...entries, formData]); // Add new entry to list
-  //   setFormData({ title: '', startDate: '', endDate: '' }); // Reset form
-  //   setShowDialog(false); // Close dialog
-  // };
-
-
 
 
   const handleSave = () => {
@@ -97,7 +112,7 @@ const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
         ...formData,
         income: '',
         // expenses: [],
-        expenses: [{ label: '', amount: '' }],
+        expenses: [{ label: '', amount: '', category: 'Others' }],
         editing: false, // Not editing by default
         original: {}
       }
@@ -160,54 +175,35 @@ JSON.stringify(original.expenses || []) !== JSON.stringify(current.expenses || [
   };
 
 
-
-
+  
+  
+  
   // New: update individual field in a card while editing
   const handleFieldChange = (index, field, value) => {
-    // const updated = [...entries];
-    // updated[index][field] = value;
-    // setEntries(updated);
 
-      const updated = [...entries];
-  const prev = updated[index][field];
-
-  // if (prev !== value) {
-  //   toast.info(`${field} updated.`);
-  // }
-
-  updated[index][field] = value;
+    const updated = [...entries];
+    updated[index][field] = value;
   setEntries(updated);
   };
-
+  
   // New: add a new blank expense input to a card
   const addExpense = (index) => {
-    // const updated = [...entries];
-    // updated[index].expenses.push('');
-    // setEntries(updated);
-
       const updated = [...entries];
-  updated[index].expenses.push({ label: '', amount: '' });
+  updated[index].expenses.push({ label: '', amount: '', category: 'Others' });
   setEntries(updated);
   toast.info('New expense field added.');
   };
 
   // New: update a specific expense line in a card
   const handleExpenseChange = (entryIndex, expenseIndex, value) => {
-    // const updated = [...entries];
-    // updated[entryIndex].expenses[expenseIndex] = value;
-    // setEntries(updated);
-
+  
       const updated = [...entries];
   const prev = updated[entryIndex].expenses[expenseIndex];
-
-  // if (prev !== value) {
-  //   toast.info(`Expense ${expenseIndex + 1} updated.`);
-  // }
 
   updated[entryIndex].expenses[expenseIndex] = value;
   setEntries(updated);
   };
-
+  
   const calculateExpenseTotal = (expenses) => {
     // return expenses.reduce((acc, exp) => acc + (parseFloat(exp.amount) || 0), 0);
     return expenses.reduce((acc, exp) => acc + (parseFloat(exp.amount) || 0), 0);
@@ -219,9 +215,54 @@ const deleteExpense = (entryIndex, expenseIndex) => {
   setEntries(updated);
 };
 
+  const handleAddNewCategory = (newCat) => {
+ if (newCat && !categories.includes(newCat.trim())) {
+    setCategories(prev => [...prev, newCat.trim()]);
+    toast.success(`Category "${newCat}" added`);
+  }
+  };
+
+  const totalIncome = entries.reduce((acc, e) => acc + (parseFloat(e.income || 0) || 0), 0);
+  const totalExpenses = entries.reduce((acc, e) => acc + calculateExpenseTotal(e.expenses), 0);
+
+  const [theme, setTheme] = useState('light');
+  
+  // Apply theme attribute for CSS vars
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
+
+const categoryIcons = {
+  Food: <RestaurantIcon />,
+  Transport: <DirectionsCarIcon />,
+  Utilities: <HomeIconCategory />,
+  Health: <LocalHospitalIcon />,
+  Entertainment: <MusicNoteIcon />,
+  Others: <CategoryIcon />
+};
+
+const categoryTotals = entries.flatMap((e) => e.expenses)
+  .reduce((acc, exp) => {
+    acc[exp.category] = (acc[exp.category] || 0) + (parseFloat(exp.amount) || 0);
+    return acc;
+  }, {});
+
+const chartData = Object.entries(categoryTotals).map(([name, value]) => ({
+  name,
+  value
+}));
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
+
+
+
+
+
+
 
   return (
     <div className={`layout ${isOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+     
     <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
 
       <button className="toggle-btn" onClick={toggleSidebar}>
@@ -229,11 +270,18 @@ const deleteExpense = (entryIndex, expenseIndex) => {
       </button>
 
       <div className={`sidebar ${isOpen ? 'active' : ''}`}>
+         <div className="top-bar">
+  {/* ...other header items... */}
+  <button
+    className="theme-toggle-btn"
+    onClick={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))}
+  >
+    {theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
+  </button>
+</div>
         <ul>
         <li onClick={handleItemClick}><span className="icon"><HomeIcon /></span><span><Link to="/sidebar" className="text link-clean">Home</Link></span></li>
-        {/* <li onClick={handleItemClick}><span className="icon"><HomeIcon /></span><span><Link to="/sidebar" className="text link-clean">Home</Link></span></li> */}
-        {/* <li onClick={handleItemClick}><span className="icon"><NoteAdd /></span><span className="text">New</span></li> */}
-                  {/* New: 'New' menu item opens the dialog */}
+           {/* New: 'New' menu item opens the dialog */}
           <li onClick={() => setShowDialog(true)}>
             <span className="icon"><NoteAdd /></span>
             <span className="text">New</span>
@@ -286,101 +334,6 @@ const deleteExpense = (entryIndex, expenseIndex) => {
           </div>
         )}
 
-        {/* New: Display saved entries in a grid */}
-        {/* <div className="grid">
-          {entries.map((entry, index) => (
-            <div key={index} className="grid-card"> */}
-              
-              {/* New: card title and edit/delete icons */}
-              {/* <div className="card-header">
-                <h3>
-                  {entry.editing ? (
-                    <input
-                      type="text"
-                      value={entry.title}
-                      onChange={(e) => handleFieldChange(index, 'title', e.target.value)}
-                    />
-                  ) : entry.title}
-                </h3>
-                <div className="card-actions"> */}
-                  {/* <EditIcon className="edit-icon" onClick={() => toggleEdit(index)} />
-                  <DeleteIcon className="delete-icon" onClick={() => handleDelete(index)} /> */}
-
-                  {/* If not editing, show edit icon */}
-  {/* {!entry.editing && (
-    <EditIcon className="edit-icon" onClick={() => toggleEdit(index)} />
-  )} */}
-
-  {/* If editing, show save icon */}
-  {/* {entry.editing && (
-    <SaveIcon className="save-icon" onClick={() => toggleEdit(index)} />
-  )} */}
-
-  {/* Delete icon always shows */}
-  {/* <DeleteIcon className="delete-icon" onClick={() => handleDelete(index)} />
-                </div>
-              </div> */}
-
-              {/* Editable start date */}
-              {/* <p><strong>Start:</strong> {entry.editing ? (
-                <input
-                  type="date"
-                  value={entry.startDate}
-                  onChange={(e) => handleFieldChange(index, 'startDate', e.target.value)}
-                />
-              ) : entry.startDate}</p> */}
-
-              {/* Editable end date */}
-              {/* <p><strong>End:</strong> {entry.editing ? (
-                <input
-                  type="date"
-                  value={entry.endDate}
-                  onChange={(e) => handleFieldChange(index, 'endDate', e.target.value)}
-                />
-              ) : entry.endDate}</p> */}
-
-              {/* Editable income */}
-              {/* <p><strong>Income:</strong> {entry.editing ? (
-                <input
-                  type="number"
-                  value={entry.income}
-                  onChange={(e) => handleFieldChange(index, 'income', e.target.value)}
-                />
-              ) : `₦${entry.income || 0}`}</p> */}
-
-              {/* Expense lines with input */}
-              {/* <div className="expense-section">
-                <strong>Expenses:</strong>
-                {entry.expenses.map((exp, expIndex) => (
-                  <input
-                    key={expIndex}
-                    type="text"
-                    value={exp}
-                    onChange={(e) => handleExpenseChange(index, expIndex, e.target.value)}
-                    disabled={!entry.editing}
-                    className="expense-input"
-                  />
-                ))} */}
-
-                {/* Button to add new expense row */}
-                {/* {entry.editing && (
-                  <AddCircleOutlineIcon
-  className="add-expense-icon"
-  onClick={() => addExpense(index)}
-  titleAccess="Add Expense"
-/>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Sidebar; */}
-
  <div className="grid">
           {entries.map((entry, index) => {
             const totalExpenses = calculateExpenseTotal(entry.expenses);
@@ -422,14 +375,6 @@ export default Sidebar; */}
                   />
                 ) : entry.endDate}</p>
 
-                {/* <p><strong>Income:</strong> {entry.editing ? (
-                  <input
-                    type="number"
-                    value={entry.income}
-                    onChange={(e) => handleFieldChange(index, 'income', e.target.value)}
-                  />
-                ) : `₦${entry.income || 0}`}</p> */}
-
 
 <p className="income-text">
   <strong>Income:</strong> {entry.editing ? (
@@ -446,57 +391,7 @@ export default Sidebar; */}
 
                 <div className="expense-section">
                   <strong>Expenses:</strong>
-                  {/* {entry.expenses.map((exp, expIndex) => (
-                    <input
-                      key={expIndex}
-                      type="text"
-                      value={exp}
-                      onChange={(e) => handleExpenseChange(index, expIndex, e.target.value)}
-                      disabled={!entry.editing}
-                      className="expense-input"
-                    />
-                  ))} */}
-{/* {entry.expenses.map((exp, expIndex) => (
-  entry.editing ? (
-    <input
-      key={expIndex}
-      type="text"
-      value={exp}
-      onChange={(e) => handleExpenseChange(index, expIndex, e.target.value)}
-      className="expense-input"
-    />
-  ) : (
-    <p key={expIndex} className="expense-label">- ₦{exp || 0}</p>
-  )
-))} */}
 
-
-{/* {entry.expenses.map((exp, expIndex) => {
-  // Hide empty expense fields when not editing
-  if (!entry.editing && !exp) return null;
-
-  return (
-    <div key={expIndex} className="expense-row">
-      {entry.editing ? (
-        <>
-          <input
-            type="text"
-            value={exp}
-            onChange={(e) => handleExpenseChange(index, expIndex, e.target.value)}
-            className="expense-input"
-          />
-          <DeleteIcon
-            className="expense-delete-icon"
-            onClick={() => deleteExpense(index, expIndex)}
-            titleAccess="Delete Expense"
-          />
-        </>
-      ) : (
-        <p className="expense-label">↓ ₦{exp || 0}</p>
-      )}
-    </div>
-  );
-})} */}
 
 
 {entry.expenses.map((exp, expIndex) => {
@@ -508,7 +403,7 @@ export default Sidebar; */}
         <>
           <input
             type="text"
-            placeholder="Label"
+            placeholder="Enter the expense Title e.g Food"
             value={exp.label}
             onChange={(e) =>
               handleExpenseFieldChange(index, expIndex, 'label', e.target.value)
@@ -524,6 +419,33 @@ export default Sidebar; */}
             }
             className="expense-input"
           />
+
+          <select
+                        value={exp.category}
+                        onChange={(e) => handleExpenseFieldChange(index, expIndex, 'category', e.target.value)}
+                        className="category-select"
+                      >
+     
+                        {categories.map((cat, i) => (
+                          <option key={i} value={cat}>{cat}</option>
+                        ))}
+                        <option value="">+ New Category</option>
+                      </select>
+
+                      {!entry.editing && (
+                         <div className="expense-icon-label">
+    {categoryIcons[exp.category] || <CategoryIcon />}
+  <span className="expense-category-display">({exp.category})</span> 
+  </div>
+)}
+                       
+                        <input
+    type="text"
+    placeholder="Add new category"
+    className="new-category-input"  // NEW
+    onBlur={(e) => handleAddNewCategory(e.target.value)}
+  />
+
           <DeleteIcon
             className="expense-delete-icon"
             onClick={() => deleteExpense(index, expIndex)}
@@ -532,13 +454,18 @@ export default Sidebar; */}
         </>
       ) : (
         <p className="expense-label">
+          <Tooltip title={exp.category}>
+          <span className="expense-icon">
+          {categoryIcons[exp.category] || <CategoryIcon />} {/* ✅ New line */}
+          </span>
+          </Tooltip>
           ↓ {exp.label}: <span>{formatCurrency(exp.amount)}</span>
+                    
         </p>
       )}
     </div>
   );
 })}
-
 
                   {entry.editing && (
                     <AddCircleOutlineIcon
@@ -551,7 +478,7 @@ export default Sidebar; */}
 
                 <div className="summary">
                   <p><strong>Total Expenses:</strong> ₦{totalExpenses}</p>
-                  {/* <strong>Balance:</strong> ₦{(parseFloat(entry.income || 0) - totalExpenses)} */}
+    
                   <p className={`balance-text ${parseFloat(entry.income || 0) - totalExpenses < 0 ? 'negative' : 'positive'}`}>
   <strong>Balance:</strong> {formatCurrency(parseFloat(entry.income || 0) - totalExpenses)}
 </p>
@@ -561,8 +488,28 @@ export default Sidebar; */}
             );
           })}
         </div>
+   
+
+      <div className="expense-category-summary">
+        <h3>Global Summary</h3>
+        <p><strong>Total Income:</strong> {formatCurrency(totalIncome)}</p>
+        <p><strong>Total Expenses:</strong> {formatCurrency(totalExpenses)}</p>
+        <p><strong>Balance:</strong> {formatCurrency(totalIncome - totalExpenses)}</p>
       </div>
+
+
+      <ResponsiveContainer width="100%" height={200}>
+  <PieChart>
+    <Pie dataKey="value" data={chartData} outerRadius={80} label>
+      {chartData.map((entry, i) => (
+        <Cell key={`cell-${i}`} fill={COLORS[i % COLORS.length]} />
+      ))}
+    </Pie>
+    <Legend />
+  </PieChart>
+</ResponsiveContainer>
     </div>
+      </div>
   );
 };
 

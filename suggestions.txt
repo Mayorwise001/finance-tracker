@@ -1,1 +1,11 @@
 Add summary charts (pie/bar)?
+
+
+make the input tags for the expenses mobile responsive, Add categories with dropdowns and also leave room for new categories, Show total income/expense summary across all cards,  split expenses into categories,and  auto-calculate totals live
+
+Write the CSS for the mobile responsive inputs and dropdown?
+
+Help you add a chart to visualize the categories?
+
+
+Let me know if you’d like a tooltip for categories, custom category icons, or category-based analytics charts!

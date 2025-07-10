@@ -5,3 +5,24 @@ body {
     font-family: 'Roboto', sans-serif;
   }
   
+  .top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: var(--text);
+}
+
+/* Mobile responsiveness: increase tappable area */
+@media (max-width: 600px) {
+  .theme-toggle-btn {
+    font-size: 28px;
+  }
+}
