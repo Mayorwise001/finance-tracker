@@ -79,7 +79,6 @@ body {
   /* Toggle button */
   .toggle-btn {
     position: fixed;
-    top: 12px;
     left: 10px;
     background-color: #38c172;
     color: white;
@@ -347,12 +346,6 @@ body {
   border-color: #4A90E2;
 }
 
-
-
-
-
-
-
 /* NEW: Input to add new category */
 .new-category-input {
   padding: 8px; margin: 6px 0;
@@ -374,6 +367,10 @@ body {
 }
 
 
+.summary-income {
+  color: green;
+  font-weight: bold;
+}
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
@@ -401,16 +398,95 @@ body[data-theme="dark"] {
   color: white;
 }
 
+
+/* NEW: Styles for income section */
+.income-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap; /* Enables wrapping for mobile */
+}
+
+.income-column {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.income-input {
+  flex: 1;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.income-label {
+  color: green;
+  font-weight: 500;
+}
+
+/* NEW: Add income icon styling */
+.add-income-icon {
+  color: green;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+/* NEW: Global summary color coding */
+.global-income {
+  color: green;
+}
+
+.global-expense {
+  color: maroon;
+}
+
+.global-balance.positive {
+  color: green;
+  font-weight: bold;
+}
+
+.global-balance.negative {
+  color: maroon;
+  font-weight: bold;
+}
+
+
+@media (max-width: 768px) {
+  .income-column {
+    flex-direction: column; /* Stack on small screens */
+    width: 100%;
+  }
+
+  .income-input {
+    width: 100%;
+  }
+
+  .income-delete-icon {
+    align-self: flex-start;
+    margin-top: 5px;
+  }
+}
+
+/* NEW: Delete icon for income */
+.income-delete-icon {
+  color: crimson;
+  cursor: pointer;
+}
+
+
+
+
 /* Mobile responsiveness: increase tappable area */
 @media (max-width: 600px) {
   .theme-toggle-btn {
     font-size: 28px;
   }
 }
-
-
-
-
 
 
 /* Optional: Add smooth responsiveness for larger screens */

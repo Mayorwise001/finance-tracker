@@ -110,8 +110,7 @@ const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
       ...entries,
       {
         ...formData,
-        income: '',
-        // expenses: [],
+        income: [{ label: '', amount: '' }], // NEW: multiple income entries
         expenses: [{ label: '', amount: '', category: 'Others' }],
         editing: false, // Not editing by default
         original: {}
@@ -194,6 +193,36 @@ JSON.stringify(original.expenses || []) !== JSON.stringify(current.expenses || [
   toast.info('New expense field added.');
   };
 
+// NEW: Add new income field to a card
+const addIncome = (entryIndex) => {  
+  const updated = [...entries];
+  updated[entryIndex].income.push({ label: '', amount: '' });
+  setEntries(updated);
+  toast.info('New income source added.'); // NEW: toast
+};
+
+// NEW: delete a specific income field
+const deleteIncome = (entryIndex, incomeIndex) => {
+  const updated = [...entries];
+  updated[entryIndex].income.splice(incomeIndex, 1); // remove by index
+  setEntries(updated);
+  toast.success('Income source deleted.'); // optional toast
+};
+
+
+// NEW: Update income label or amount
+const handleIncomeChange = (entryIndex, incomeIndex, field, value) => {
+  const updated = [...entries];
+  updated[entryIndex].income[incomeIndex][field] = value;
+  setEntries(updated);
+};
+
+
+// NEW: Calculate total income per card
+const calculateIncomeTotal = (incomeArr) => {
+  // return incomes.reduce((acc, inc) => acc + (parseFloat(inc.amount) || 0), 0);
+  return incomeArr.reduce((acc, inc) => acc + (parseFloat(inc.amount) || 0), 0);
+};
   // New: update a specific expense line in a card
   const handleExpenseChange = (entryIndex, expenseIndex, value) => {
   
@@ -222,7 +251,9 @@ const deleteExpense = (entryIndex, expenseIndex) => {
   }
   };
 
-  const totalIncome = entries.reduce((acc, e) => acc + (parseFloat(e.income || 0) || 0), 0);
+  // const totalIncome = entries.reduce((acc, e) => acc + (parseFloat(e.income || 0) || 0), 0);
+  const totalIncome = entries.reduce(
+  (acc, e) => acc + calculateIncomeTotal(e.income), 0);  // UPDATED
   const totalExpenses = entries.reduce((acc, e) => acc + calculateExpenseTotal(e.expenses), 0);
 
   const [theme, setTheme] = useState('light');
@@ -376,27 +407,64 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
                 ) : entry.endDate}</p>
 
 
-<p className="income-text">
-  <strong>Income:</strong> {entry.editing ? (
-    <input
-      type="number"
-      value={entry.income}
-      onChange={(e) => handleFieldChange(index, 'income', e.target.value)}
+<div className="income-section"> {/* NEW wrapper */}
+  <strong>Income:</strong>
+  {entry.income.map((inc, incomeIndex) => (
+    <div key={incomeIndex} className="income-row"> {/* NEW layout for each income */}
+      {entry.editing ? (
+        <>
+          <div className="income-column"> {/* NEW column wrapper */}
+            <input
+              type="text"
+              placeholder="Source"
+              value={inc.label}
+              onChange={(e) =>
+                handleIncomeChange(index, incomeIndex, 'label', e.target.value)
+              }
+              className="income-input"
+            />
+            <input
+              type="number"
+              placeholder="Amount"
+              value={inc.amount}
+              onChange={(e) =>
+                handleIncomeChange(index, incomeIndex, 'amount', e.target.value)
+              }
+              className="income-input"
+            />
+          </div>
+
+          <DeleteIcon
+            className="income-delete-icon" // NEW delete icon
+            onClick={() => deleteIncome(index, incomeIndex)} // NEW
+            titleAccess="Delete Income"
+          />
+        </>
+      ) : (
+        <span className="income-label">
+          ↑ {inc.label}: {formatCurrency(inc.amount)}
+        </span>
+      )}
+    </div>
+  ))}
+
+  {entry.editing && (
+    <AddCircleOutlineIcon
+      className="add-income-icon"
+      onClick={() => addIncome(index)}
+      titleAccess="Add Income"
     />
-  ) : (
-    <>↑ <span>{formatCurrency(entry.income)}</span></>
   )}
-</p>
+</div>
 
 
                 <div className="expense-section">
                   <strong>Expenses:</strong>
 
 
-
 {entry.expenses.map((exp, expIndex) => {
   if (!entry.editing && (!exp.label || !exp.amount)) return null;
-
+  
   return (
     <div key={expIndex} className="expense-row">
       {entry.editing ? (
@@ -409,7 +477,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
               handleExpenseFieldChange(index, expIndex, 'label', e.target.value)
             }
             className="expense-input"
-          />
+            />
           <input
             type="number"
             placeholder="Amount"
@@ -418,7 +486,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
               handleExpenseFieldChange(index, expIndex, 'amount', e.target.value)
             }
             className="expense-input"
-          />
+            />
 
           <select
                         value={exp.category}
@@ -442,7 +510,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
                         <input
     type="text"
     placeholder="Add new category"
-    className="new-category-input"  // NEW
+    className="new-category-input" 
     onBlur={(e) => handleAddNewCategory(e.target.value)}
   />
 
@@ -469,14 +537,15 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
 
                   {entry.editing && (
                     <AddCircleOutlineIcon
-                      className="add-expense-icon"
-                      onClick={() => addExpense(index)}
+                    className="add-expense-icon"
+                    onClick={() => addExpense(index)}
                       titleAccess="Add Expense"
                     />
                   )}
                 </div>
 
                 <div className="summary">
+                    <p><span className="summary-income"><strong> Total Income:</strong> {formatCurrency(calculateIncomeTotal(entry.income))}</span></p>
                   <p><strong>Total Expenses:</strong> ₦{totalExpenses}</p>
     
                   <p className={`balance-text ${parseFloat(entry.income || 0) - totalExpenses < 0 ? 'negative' : 'positive'}`}>
@@ -490,12 +559,15 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
         </div>
    
 
-      <div className="expense-category-summary">
-        <h3>Global Summary</h3>
-        <p><strong>Total Income:</strong> {formatCurrency(totalIncome)}</p>
-        <p><strong>Total Expenses:</strong> {formatCurrency(totalExpenses)}</p>
-        <p><strong>Balance:</strong> {formatCurrency(totalIncome - totalExpenses)}</p>
-      </div>
+      <div className="expense-category-summary"> 
+  <h3>Global Summary</h3>
+  <p className="global-income"><strong>Total Income:</strong> {formatCurrency(totalIncome)}</p> {/* NEW styling */}
+  <p className="global-expense"><strong>Total Expenses:</strong> {formatCurrency(totalExpenses)}</p>
+  <p className={`global-balance ${totalIncome - totalExpenses >= 0 ? 'positive' : 'negative'}`}> {/* NEW */}
+    <strong>Balance:</strong> {formatCurrency(totalIncome - totalExpenses)}
+  </p>
+</div>
+
 
 
       <ResponsiveContainer width="100%" height={200}>

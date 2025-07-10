@@ -15,6 +15,7 @@ body {
   margin: 0 auto;
   flex-wrap: wrap;
   height: 100vh;
+  top: 0;
 
     background: linear-gradient(135deg, 
         #052e16 0%,    /* Dark green */
