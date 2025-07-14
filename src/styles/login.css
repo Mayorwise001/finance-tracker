@@ -5,7 +5,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background: linear-gradient(to right, #f7f8fa, #e1e6f0); */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #fffaf0;
 }
@@ -108,15 +107,32 @@
   font-size: 1rem;
 }
 
+
 .toggle-password {
   position: absolute;
-  right: 15px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: #718096;
+  color: #1c7441;
   font-size: 1.1rem;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
+.toggle-password:hover {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+}
+
+
+.input-icon-wrapper input:focus + .input-icon,
+.input-icon-wrapper:focus-within .input-icon {
+  color: #1c7441;
+  transform: translateY(-50%) scale(1.2);
+  opacity: 1;
+}
+
 
 .button-row {
   display: flex;
@@ -183,4 +199,42 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 20px; /* optional spacing */
+}
+
+.input-icon {
+ position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  font-size: 1rem;
+  pointer-events: none;
+  opacity: 0.6;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+
+.input-icon-wrapper {
+  position: relative;
+  margin-bottom: 1.2rem;
+   transition: all 0.3s ease;
+}
+
+.input-icon-wrapper input {
+    width: 90%;
+  padding: 10px 10px 10px 2.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+/* Animation classes */
+.animated-icon {
+  transition: transform 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+}
+
+.animated-toggle {
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }

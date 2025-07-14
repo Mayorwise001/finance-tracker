@@ -191,3 +191,51 @@ button[type="submit"]:disabled {
   align-items: center;
   margin-bottom: 20px; /* optional spacing */
 }
+
+.input-icon-wrapper {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.input-icon-wrapper input {
+  width: 90%;
+  padding-left: 40px;
+}
+
+
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.input-with-icon input {
+  padding-left: 2.2rem; /* Space for the icon */
+  width: 90%;
+  transition: all 0.3s ease;
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%) scale(0.5);
+  opacity: 0;
+  transition: all 0.3s ease;
+  color: #888;
+  pointer-events: none;
+}
+
+
+/* Optional hover or focus effects */
+.input-with-icon:focus-within .input-icon {
+  color: #1c7441;
+    transform: translateY(-50%) scale(1);
+}
+
+.input-icon.show {
+  transform: translateY(-50%) scale(1);
+  opacity: 1;
+}

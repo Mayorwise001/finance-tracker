@@ -4,6 +4,8 @@ import { FaEye, FaEyeSlash,FaCog } from 'react-icons/fa';
 import { redirect, useNavigate } from 'react-router-dom';
 import Footers from '../components/home_components/footer'; // Adjust the import path as necessary
 import Navbar from '../components/home_components/navbar'; // Import your Navbar component
+import { FaEnvelope, FaLock } from 'react-icons/fa';
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,10 +36,7 @@ const Login = () => {
       if (!response.ok) throw new Error('Invalid credentials');
 
       const data = await response.json();
-      // setStatusMessage('Login Successful!');
-      // setTimeout(() => {
-      //   navigate('/'); // Redirect to a protected page
-      // }, 1500);
+ 
           // Delay status message to allow spinner to spin first
     setTimeout(() => {
       setStatusMessage('Login successful!');
@@ -72,31 +71,43 @@ const Login = () => {
         <h2>Welcome Back</h2>
         <p>Please login to continue</p>
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-          value={formData.email}
-          onChange={handleChange}
-        />
 
+<div className="input-icon-wrapper">
+  <span className="input-icon animated-icon"><FaEnvelope /></span> {/* You can replace with an actual email icon if you prefer */}
+
+  <input
+    type="email"
+    name="email"
+    placeholder="Email"
+    required
+    value={formData.email}
+    onChange={handleChange}
+  />
+</div>
+
+
+
+        <div className="input-icon-wrapper">
+  
   <div className="password-wrapper">
-          <input
-            type={showPassword ? 'text' : 'password'}
-            name="password"
-            placeholder="Password"
-            required
-            value={formData.password}
-            onChange={handleChange}
-          />
-          <span
-            className="toggle-password"
-            onClick={() => setShowPassword(prev => !prev)}
-          >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </span>
-        </div>
+    <span className="input-icon animated-icon"><FaLock /></span>
+    <input
+      type={showPassword ? 'text' : 'password'}
+      name="password"
+      placeholder="Password"
+      required
+      value={formData.password}
+      onChange={handleChange}
+    />
+    <span
+      className="toggle-password animated-toggle"
+      onClick={() => setShowPassword(prev => !prev)}
+    >
+      {showPassword ? <FaEyeSlash /> : <FaEye />}
+    </span>
+  </div>
+</div>
+
 
         <div className="button-row">
 <button type="submit" disabled={loading} className="login-button">
