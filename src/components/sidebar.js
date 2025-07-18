@@ -136,9 +136,10 @@ const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
   setShowDialog(false);
      toast.success('Entry created successfully!');
   };
-
-
-const handleDelete = async (index) => {
+  
+  
+  const handleDelete = async (index) => {
+  if (!window.confirm('Are you sure you want to delete this entry?')) return;
   const entryToDelete = entries[index];
   const token = localStorage.getItem('token');
 
@@ -153,7 +154,6 @@ const handleDelete = async (index) => {
     );
 
     if (res.status === 200) {
-        if (!window.confirm('Are you sure you want to delete this entry?')) return;
       const updated = [...entries];
       updated.splice(index, 1); // Remove from local state
       setEntries(updated);
