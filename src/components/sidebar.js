@@ -107,7 +107,7 @@ const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
   const newEntry = {
     ...formData,
     income: [{ label: '', amount: '' }],
-    expenses: [{ label: '', amount: '', category: 'Others' }],
+    expenses: [{ label: '', amount: '', category: 'Select a category' }],
     editing: false,
     original: {}
   };
