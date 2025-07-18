@@ -13,6 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'; // Fancy Add Expense icon
 import SaveIcon from '@mui/icons-material/Save';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -592,8 +593,16 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
                         value={exp.category}
                         onChange={(e) => handleExpenseFieldChange(index, expIndex, 'category', e.target.value)}
                         className="category-select"
+                          IconComponent={ArrowDropDownIcon} // ✅ Adds custom arrow icon
+  sx={{
+    width: '100%',
+    padding: '8px',
+    fontSize: '14px',
+    color: '#333',
+    '& svg': { color: '#555' } // ✅ Optional styling for the arrow
+  }}
                       >
-     
+     <option value="" disabled>Select a category</option>
                         {categories.map((cat, i) => (
                           <option key={i} value={cat}>{cat}</option>
                         ))}
