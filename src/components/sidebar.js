@@ -590,23 +590,15 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
             />
 
           <select
-                        value={exp.category}
+                        value={exp.category || ''}
                         onChange={(e) => handleExpenseFieldChange(index, expIndex, 'category', e.target.value)}
                         className="category-select"
-                          IconComponent={ArrowDropDownIcon} // ✅ Adds custom arrow icon
-  sx={{
-    width: '100%',
-    padding: '8px',
-    fontSize: '14px',
-    color: '#333',
-    '& svg': { color: '#555' } // ✅ Optional styling for the arrow
-  }}
-                      >
+                     >
      <option value="" disabled>Select a category</option>
                         {categories.map((cat, i) => (
                           <option key={i} value={cat}>{cat}</option>
                         ))}
-                        <option value="">+ New Category</option>
+                        <option value="+new">+ New Category</option>
                       </select>
 
                       {!entry.editing && (
