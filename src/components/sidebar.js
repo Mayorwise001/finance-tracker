@@ -252,7 +252,7 @@ const saveEdit = async (index) => {
   //  add a new blank expense input to a card
   const addExpense = (index) => {
       const updated = [...entries];
-  updated[index].expenses.push({ label: '', amount: '', category: 'Others' });
+  updated[index].expenses.push({ label: '', amount: '', category: 'Select a category' });
   setEntries(updated);
   toast.info('New expense field added.');
   };
