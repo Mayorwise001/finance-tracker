@@ -153,7 +153,7 @@ const handleDelete = async (index) => {
     );
 
     if (res.status === 200) {
-        if (!window.confirm('Are you sure you want to delete this entry?')) return;
+        // if (!window.confirm('Are you sure you want to delete this entry?')) return;
       const updated = [...entries];
       updated.splice(index, 1); // Remove from local state
       setEntries(updated);
