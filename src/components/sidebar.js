@@ -113,7 +113,7 @@ const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
 
   try {
     const token = localStorage.getItem('token');
-    const res = await axios.post('http://localhost:5000/api/auth/', newEntry, {
+    const res = await axios.post('https://finance-tracker-backend-ckqn.onrender.com/api/auth/', newEntry, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
@@ -199,7 +199,7 @@ const saveEdit = async (index) => {
   try {
     // ✅ Call backend to update
     const token = localStorage.getItem('token');
-    const res = await fetch(`http://localhost:5000/api/auth/${current._id}`, {
+    const res = await fetch(`https://finance-tracker-backend-ckqn.onrender.com/api/auth/${current._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -454,9 +454,10 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
                       <EditIcon className="edit-icon" onClick={() => toggleEdit(index)} />
                     )}
                     {entry.editing && (
-                      <SaveIcon className="save-icon" onClick={() => saveEdit(index)} />
+                      <SaveIcon className="save-icon" onClick={() => saveEdit(index)} titleAccess="Save entry"/>
+                       
                     )}
-                    <DeleteIcon className="delete-icon" onClick={() => handleDelete(index)} />
+                    <DeleteIcon className="delete-icon" onClick={() => handleDelete(index)}  titleAccess="Delete entry"/>
                   </div>
                 </div>
 
