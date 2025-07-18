@@ -138,20 +138,36 @@ const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
   };
 
 
+const handleDelete = async (index) => {
+  const entryToDelete = entries[index];
+  const token = localStorage.getItem('token');
+
+  try {
+    const res = await axios.delete(
+      `https://finance-tracker-backend-ckqn.onrender.com/api/auth/${entryToDelete._id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    if (res.status === 200) {
+        if (!window.confirm('Are you sure you want to delete this entry?')) return;
+      const updated = [...entries];
+      updated.splice(index, 1); // Remove from local state
+      setEntries(updated);
+      toast.success('Entry deleted successfully.');
+    } else {
+      toast.error('Failed to delete entry.');
+    }
+  } catch (error) {
+    console.error('Delete error:', error);
+    toast.error('Error deleting entry.');
+  }
 
 
-
-
-
-
-  
-  //  delete a card entry
-  const handleDelete = (index) => {
-    const updated = [...entries];
-    updated.splice(index, 1); // Remove entry by index
-    setEntries(updated);
-     toast.success('Entry deleted.');
-  };
+};
 
 
 
@@ -192,8 +208,8 @@ const saveEdit = async (index) => {
 
 
   if (!hasChanged) {
-    toast.info('No changes made.');
-    return;
+    toast.info('No changes made (saved again).');
+    updated[index].editing = false; // Just exit edit mode
   }
 
   try {
