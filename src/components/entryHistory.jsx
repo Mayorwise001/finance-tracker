@@ -8,7 +8,7 @@ const EntryHistory = ({ entries, setEntries }) => {
     const fetchEntries = async () => {
       try {
         const token = localStorage.getItem('token'); // ✅ Get JWT token
-        const response = await axios.get('http://localhost:5000/api/auth/', {
+        const response = await axios.get('https://finance-tracker-backend-ckqn.onrender.com/api/auth/', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
