@@ -8,7 +8,7 @@ const companies = [
   { name: 'Gugle', logo: 'image_4.jpg' },
   { name: 'Micracraft', logo: 'image_5.jpg' },
   { name: 'Amazonia', logo: 'image_6.webp' },
-  // Add more as needed
+
 ];
 
 const TrustedBy = () => {

@@ -110,17 +110,12 @@ function ETXStats() {
       <div className="ETX-content">
         {/* Left column */}
         <div className="ETX-left">
-
-           {/* ⬇️ Added animation classes and ref to heading */}
           <h1
             className={`ETX-heading off-left ${showHeading ? 'slide-in' : 'off-left'}`} // ⬅️ Conditional class
-            ref={headingRef} // ⬅️ Attach ref
+            ref={headingRef} 
           >
             We’re #1 for a reason…
           </h1>
-
-          
-          {/* Subtitle */}
   <p
     ref={subRef}
     className={`ETX-sub off-left ${showSub ? 'slide-in' : ''}`}

@@ -4,7 +4,7 @@ import '../styles/signup.css';
 import { FaEye, FaEyeSlash, FaCog } from 'react-icons/fa';
 import Navbar from '../components/home_components/navbar'; // Import your Navbar component
 import Footers from '../components/home_components/footer'; // Adjust the import path as necessary
-import { FaUser, FaEnvelope, FaUserTag, FaLock, FaUserPlus } from 'react-icons/fa';
+import { FaEnvelope, FaUserTag, FaLock, FaUserPlus } from 'react-icons/fa';
 
 
 const Signup = () => {

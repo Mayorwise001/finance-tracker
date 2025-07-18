@@ -76,14 +76,6 @@ const TestimonialCard = ({ t }) => {
 };
 
 const Testimonials = () => {
-//   return (
-//     <section className="testimonials-container">
-//       {testimonials.map((t, index) => (
-//         <TestimonialCard key={index} t={t} />
-//       ))}
-//     </section>
-//   );
-// };
 
 // export default Testimonials;
 return (
@@ -91,7 +83,6 @@ return (
     <div id="testimonial"></div>   
       <h2 className="testimonial-title">What Our Members Are Saying</h2>
     <section className="testimonials-container">
-      {/* ✅ Added title */}
 
       {/* Testimonials Loop */}
       {testimonials.map((t, index) => (

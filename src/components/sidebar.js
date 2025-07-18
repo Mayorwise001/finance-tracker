@@ -2,6 +2,7 @@ import React, { useState , useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/sidebar.css'; // Import your CSS file for styling
 import {logout} from './logout'
+import axios from 'axios';
 // Material UI Icons
 import HomeIcon from '@mui/icons-material/Home';
 import NoteAdd from '@mui/icons-material/NoteAdd';
@@ -24,10 +25,7 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import CategoryIcon from '@mui/icons-material/Category';
 import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from 'recharts';
-
-
-
-
+import EntryHistory from './entryHistory';
 
 
 
@@ -40,11 +38,11 @@ const Sidebar = () => {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [isOpen, setIsOpen] = useState(window.innerWidth >= 768); // open by default on desktop
- // New: State to control dialog visibility
+ //  State to control dialog visibility
   const [showDialog, setShowDialog] = useState(false);
-  // New: State to hold saved entries
+  //  State to hold saved entries
   const [entries, setEntries] = useState([]);
-  // New: Form input data
+  //  Form input data
   const [formData, setFormData] = useState({
     title: '',
     startDate: '',
@@ -97,33 +95,57 @@ const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
     if (!isOpen) setIsOpen(true);
   };
 
-  // New: Handle input field changes
+  //  Handle input field changes
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
 
 
-  const handleSave = () => {
-    // Add new entry to entries array with default income and expenses
-    setEntries([
-      ...entries,
-      {
-        ...formData,
-        income: [{ label: '', amount: '' }], // NEW: multiple income entries
-        expenses: [{ label: '', amount: '', category: 'Others' }],
-        editing: false, // Not editing by default
-        original: {}
-      }
-    ]);
+  const handleSave = async () => {
+  const newEntry = {
+    ...formData,
+    income: [{ label: '', amount: '' }],
+    expenses: [{ label: '', amount: '', category: 'Others' }],
+    editing: false,
+    original: {}
+  };
 
-    // Reset form and close modal
-    setFormData({ title: '', startDate: '', endDate: '' });
-    setShowDialog(false);
+  try {
+    const token = localStorage.getItem('token');
+    const res = await axios.post('http://localhost:5000/api/auth/', newEntry, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    if (res.status === 201) {
+      setEntries([...entries, res.data.entry]); // use saved entry from DB
+      toast.success('Entry saved to database!');
+    }
+  } catch (error) {
+    console.error('Save Error:', error);
+    toast.error('Failed to save entry.');
+    // Fallback: still add locally
+    setEntries([...entries, newEntry]);
+  }
+
+  // Reset form and close modal
+  setFormData({ title: '', startDate: '', endDate: '' });
+  setShowDialog(false);
      toast.success('Entry created successfully!');
   };
 
-  // New: delete a card entry
+
+
+
+
+
+
+
+  
+  //  delete a card entry
   const handleDelete = (index) => {
     const updated = [...entries];
     updated.splice(index, 1); // Remove entry by index
@@ -136,48 +158,73 @@ const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
   const toggleEdit = (index) => {
     const updated = [...entries];
     updated[index].editing = true;
+
+      // Deep clone income and expenses so they don’t get mutated
+  const deepClone = (arr) => JSON.parse(JSON.stringify(arr));
       // Convert string expenses to object format if needed
-  updated[index].expenses = updated[index].expenses.map((exp) =>
-    typeof exp === 'string' ? { label: '', amount: exp } : exp
-  );
+updated[index].expenses = (Array.isArray(updated[index].expenses) ? updated[index].expenses : []).map((exp) =>
+  typeof exp === 'string' ? { label: '', amount: exp } : exp
+);
+
   updated[index].original = {
     title: updated[index].title,
     startDate: updated[index].startDate,
     endDate: updated[index].endDate,
-    income: updated[index].income,
-    expenses: [...updated[index].expenses]  // ✅ Deep copy the array
-  }; 
+    income: deepClone(updated[index].income),        // ✅ Deep clone!
+    expenses: deepClone(updated[index].expenses)     // ✅ Deep clone!
+  };
     setEntries(updated);
   };
 
 
-  const saveEdit = (index) => {
-    const updated = [...entries];
-    const original = updated[index].original || {};
-    const current = updated[index];
-    const hasChanged = original.title !== current.title ||
-      original.startDate !== current.startDate ||
-      original.endDate !== current.endDate ||
-      original.income !== current.income ||
-      original.expenses !== current.expenses ||
-JSON.stringify(original.expenses || []) !== JSON.stringify(current.expenses || []);
 
-    if (!hasChanged) {
-      toast.info('No changes made.');
-      return;
+const saveEdit = async (index) => {
+  const updated = [...entries];
+  const original = updated[index].original || {};
+  const current = updated[index];
+
+  const hasChanged =
+    original.title !== current.title ||
+    original.startDate !== current.startDate ||
+    original.endDate !== current.endDate ||
+    JSON.stringify(original.income) !== JSON.stringify(current.income) ||
+    JSON.stringify(original.expenses) !== JSON.stringify(current.expenses);
+
+
+  if (!hasChanged) {
+    toast.info('No changes made.');
+    return;
+  }
+
+  try {
+    // ✅ Call backend to update
+    const token = localStorage.getItem('token');
+    const res = await fetch(`http://localhost:5000/api/auth/${current._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(current)
+    });
+
+    if (!res.ok) {
+      throw new Error('Update failed');
     }
 
+    toast.success('Changes saved successfully!');
     updated[index].editing = false;
     updated[index].original = {};
     setEntries(updated);
-    toast.success('Changes saved successfully!');
-  };
+  } catch (error) {
+    console.error(error);
+    toast.error('Error saving changes.');
+  }
+};
 
 
-  
-  
-  
-  // New: update individual field in a card while editing
+
+  //  update individual field in a card while editing
   const handleFieldChange = (index, field, value) => {
 
     const updated = [...entries];
@@ -185,7 +232,7 @@ JSON.stringify(original.expenses || []) !== JSON.stringify(current.expenses || [
   setEntries(updated);
   };
   
-  // New: add a new blank expense input to a card
+  //  add a new blank expense input to a card
   const addExpense = (index) => {
       const updated = [...entries];
   updated[index].expenses.push({ label: '', amount: '', category: 'Others' });
@@ -193,37 +240,54 @@ JSON.stringify(original.expenses || []) !== JSON.stringify(current.expenses || [
   toast.info('New expense field added.');
   };
 
-// NEW: Add new income field to a card
+//  Add new income field to a card
 const addIncome = (entryIndex) => {  
   const updated = [...entries];
+    if (!Array.isArray(updated[entryIndex].income)) {
+    updated[entryIndex].income = [];
+  }
   updated[entryIndex].income.push({ label: '', amount: '' });
   setEntries(updated);
-  toast.info('New income source added.'); // NEW: toast
+  toast.info('New income source added.'); //  toast
 };
 
-// NEW: delete a specific income field
+// delete a specific income field
 const deleteIncome = (entryIndex, incomeIndex) => {
   const updated = [...entries];
-  updated[entryIndex].income.splice(incomeIndex, 1); // remove by index
+    // Defensive check
+  if (!Array.isArray(updated[entryIndex].income)) return;
+
+  updated[entryIndex].income.splice(incomeIndex, 1);
   setEntries(updated);
   toast.success('Income source deleted.'); // optional toast
 };
 
 
-// NEW: Update income label or amount
+// Update income label or amount
 const handleIncomeChange = (entryIndex, incomeIndex, field, value) => {
   const updated = [...entries];
+ // Defensive check
+  if (!Array.isArray(updated[entryIndex].income)) {
+    updated[entryIndex].income = [];
+  }
+
+  // Ensure the target income entry exists
+  if (!updated[entryIndex].income[incomeIndex]) {
+    updated[entryIndex].income[incomeIndex] = { label: '', amount: '' };
+  }
+
   updated[entryIndex].income[incomeIndex][field] = value;
   setEntries(updated);
 };
 
 
-// NEW: Calculate total income per card
+// Calculate total income per card
 const calculateIncomeTotal = (incomeArr) => {
-  // return incomes.reduce((acc, inc) => acc + (parseFloat(inc.amount) || 0), 0);
+  if (!Array.isArray(incomeArr)) return 0; // ✅ Defensive
   return incomeArr.reduce((acc, inc) => acc + (parseFloat(inc.amount) || 0), 0);
 };
-  // New: update a specific expense line in a card
+
+  //  update a specific expense line in a card
   const handleExpenseChange = (entryIndex, expenseIndex, value) => {
   
       const updated = [...entries];
@@ -232,11 +296,14 @@ const calculateIncomeTotal = (incomeArr) => {
   updated[entryIndex].expenses[expenseIndex] = value;
   setEntries(updated);
   };
+
   
-  const calculateExpenseTotal = (expenses) => {
-    // return expenses.reduce((acc, exp) => acc + (parseFloat(exp.amount) || 0), 0);
-    return expenses.reduce((acc, exp) => acc + (parseFloat(exp.amount) || 0), 0);
-  };
+  
+ const calculateExpenseTotal = (expenses) => {
+  if (!Array.isArray(expenses)) return 0; // ✅ Defensive
+  return expenses.reduce((acc, exp) => acc + (parseFloat(exp.amount) || 0), 0);
+};
+
 
 const deleteExpense = (entryIndex, expenseIndex) => {
   const updated = [...entries];
@@ -272,8 +339,15 @@ const categoryIcons = {
   Others: <CategoryIcon />
 };
 
-const categoryTotals = entries.flatMap((e) => e.expenses)
+const formatDate = (dateStr) => {
+  if (!dateStr) return '';
+  return new Date(dateStr).toISOString().split('T')[0];
+};
+
+const categoryTotals = entries
+  .flatMap((e) => Array.isArray(e.expenses) ? e.expenses : []) // ensure expenses is always an array
   .reduce((acc, exp) => {
+    if (!exp || typeof exp !== 'object' || !exp.category) return acc; // ✅ skip invalid
     acc[exp.category] = (acc[exp.category] || 0) + (parseFloat(exp.amount) || 0);
     return acc;
   }, {});
@@ -284,11 +358,6 @@ const chartData = Object.entries(categoryTotals).map(([name, value]) => ({
 }));
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
-
-
-
-
-
 
 
   return (
@@ -312,21 +381,21 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
 </div>
         <ul>
         <li onClick={handleItemClick}><span className="icon"><HomeIcon /></span><span><Link to="/sidebar" className="text link-clean">Home</Link></span></li>
-           {/* New: 'New' menu item opens the dialog */}
+           {/*  'New' menu item opens the dialog */}
           <li onClick={() => setShowDialog(true)}>
             <span className="icon"><NoteAdd /></span>
             <span className="text">New</span>
           </li>
           <li onClick={handleItemClick}><span className="icon"><SearchIcon /></span><span className="text">Search</span></li>
           <li onClick={handleItemClick}><span className="icon"><PersonIcon /></span><span className="text">Profile</span></li>
-          <li onClick={handleItemClick,logout} ><span className="icon"><LogoutIcon /></span><span onClick={logout} className="text">Logout</span></li>
+          <li onClick={handleItemClick, logout} ><span className="icon"><LogoutIcon /></span><span onClick={logout} className="text">Logout</span></li>
         </ul>
       </div>
 
       <div className="content">
                <h1>Expense Tracker</h1>
         <p>Track your incomes and expenses below.</p>
-      {/* New: Dialog box for adding new entries */}
+      {/*  Dialog box for adding new entries */}
         {showDialog && (
           <div className="dialog-overlay">
             <div className="dialog-box">
@@ -356,7 +425,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
                 onChange={handleInputChange}
               />
 
-              {/* New: Dialog action buttons */}
+              {/*  Dialog action buttons */}
               <div className="dialog-buttons">
                 <button className="save-btn" onClick={handleSave}>Save</button>
                 <button className="cancel-btn" onClick={() => setShowDialog(false)}>Cancel</button>
@@ -370,11 +439,12 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
             const totalExpenses = calculateExpenseTotal(entry.expenses);
             return (
               <div key={index} className="grid-card">
+               
                 <div className="card-header">
                   <h3>{entry.editing ? (
                     <input
                       type="text"
-                      value={entry.title}
+                       value={entry.title || ''}
                       onChange={(e) => handleFieldChange(index, 'title', e.target.value)}
                     />
                   ) : entry.title}</h3>
@@ -393,31 +463,44 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
                 <p><strong>Start:</strong> {entry.editing ? (
                   <input
                     type="date"
-                    value={entry.startDate}
+          
+                      value={formatDate(entry.startDate) || ''}
                     onChange={(e) => handleFieldChange(index, 'startDate', e.target.value)}
                   />
-                ) : entry.startDate}</p>
+                ) : (
+  new Date(entry.startDate).toLocaleDateString('en-NG', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+)}</p>
 
-                <p><strong>End:</strong> {entry.editing ? (
-                  <input
-                    type="date"
-                    value={entry.endDate}
-                    onChange={(e) => handleFieldChange(index, 'endDate', e.target.value)}
-                  />
-                ) : entry.endDate}</p>
+<p><strong>End:</strong> {entry.editing ? (
+  <input
+    type="date"
+    value={formatDate(entry.endDate) || ''}
+    onChange={(e) => handleFieldChange(index, 'endDate', e.target.value)}
+  />
+) : (
+  new Date(entry.endDate).toLocaleDateString('en-NG', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+)}</p>
 
 
-<div className="income-section"> {/* NEW wrapper */}
+<div className="income-section"> {/* wrapper */}
   <strong>Income:</strong>
-  {entry.income.map((inc, incomeIndex) => (
-    <div key={incomeIndex} className="income-row"> {/* NEW layout for each income */}
+  {(Array.isArray(entry.income) ? entry.income : []).map((inc, incomeIndex) => (
+    <div key={incomeIndex} className="income-row"> {/* layout for each income */}
       {entry.editing ? (
         <>
-          <div className="income-column"> {/* NEW column wrapper */}
+          <div className="income-column"> {/* column wrapper */}
             <input
               type="text"
               placeholder="Source"
-              value={inc.label}
+              value={inc.label|| ''}
               onChange={(e) =>
                 handleIncomeChange(index, incomeIndex, 'label', e.target.value)
               }
@@ -426,7 +509,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
             <input
               type="number"
               placeholder="Amount"
-              value={inc.amount}
+              value={inc.amount || ''}
               onChange={(e) =>
                 handleIncomeChange(index, incomeIndex, 'amount', e.target.value)
               }
@@ -435,8 +518,8 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
           </div>
 
           <DeleteIcon
-            className="income-delete-icon" // NEW delete icon
-            onClick={() => deleteIncome(index, incomeIndex)} // NEW
+            className="income-delete-icon" // delete icon
+            onClick={() => deleteIncome(index, incomeIndex)} 
             titleAccess="Delete Income"
           />
         </>
@@ -462,7 +545,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
                   <strong>Expenses:</strong>
 
 
-{entry.expenses.map((exp, expIndex) => {
+{(Array.isArray(entry.expenses) ? entry.expenses : []).map((exp, expIndex) => {
   if (!entry.editing && (!exp.label || !exp.amount)) return null;
   
   return (
@@ -472,7 +555,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
           <input
             type="text"
             placeholder="Enter the expense Title e.g Food"
-            value={exp.label}
+            value={exp.label || ''}
             onChange={(e) =>
               handleExpenseFieldChange(index, expIndex, 'label', e.target.value)
             }
@@ -481,7 +564,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
           <input
             type="number"
             placeholder="Amount"
-            value={exp.amount}
+            value={exp.amount || ''}
             onChange={(e) =>
               handleExpenseFieldChange(index, expIndex, 'amount', e.target.value)
             }
@@ -548,8 +631,8 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
                     <p><span className="summary-income"><strong> Total Income:</strong> {formatCurrency(calculateIncomeTotal(entry.income))}</span></p>
                   <p><strong>Total Expenses:</strong> ₦{totalExpenses}</p>
     
-                  <p className={`balance-text ${parseFloat(entry.income || 0) - totalExpenses < 0 ? 'negative' : 'positive'}`}>
-  <strong>Balance:</strong> {formatCurrency(parseFloat(entry.income || 0) - totalExpenses)}
+<p className={`balance-text ${calculateIncomeTotal(entry.income) - totalExpenses < 0 ? 'negative' : 'positive'}`}>
+  <strong>Balance:</strong> {formatCurrency(calculateIncomeTotal(entry.income) - totalExpenses)}
 </p>
 
                 </div>
@@ -566,11 +649,13 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
   <p className={`global-balance ${totalIncome - totalExpenses >= 0 ? 'positive' : 'negative'}`}> {/* NEW */}
     <strong>Balance:</strong> {formatCurrency(totalIncome - totalExpenses)}
   </p>
+
+   <EntryHistory entries={entries} setEntries={setEntries} />
 </div>
 
 
 
-      <ResponsiveContainer width="100%" height={200}>
+      <ResponsiveContainer width="100%" height={300}>
   <PieChart>
     <Pie dataKey="value" data={chartData} outerRadius={80} label>
       {chartData.map((entry, i) => (

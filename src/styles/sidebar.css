@@ -59,7 +59,7 @@ body {
   .link-clean {
     color: inherit;           /* Use the surrounding text color */
     text-decoration: none;    /* Remove underline */
-    display: inline-block;    /* Optional: useful for padding or hover effects */
+    display: inline-block;    
     
   }
 
@@ -219,23 +219,25 @@ body {
 .card-actions svg {
   margin-left: 10px;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.9rem;
 }
 
 .edit-icon {
   color: #2196f3;
+
 }
 
 .save-icon {
-  color: #4caf50;
+  color: green;
+  
 }
 
 .delete-icon {
-  color: #f44336;
+  color: red;
 }
 
 .add-expense-icon {
-  color: #009688;
+  color: green;;
   font-size: 1.8rem;
   margin-top: 0.5rem;
   cursor: pointer;
@@ -258,24 +260,12 @@ body {
   margin-top: 10px;
 }
 
-.expense-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 6px;
-}
 
-
-
-.expense-label {
-  color: maroon;
-  font-weight: 500;
-  margin-bottom: 4px;
-}
 
 .expense-delete-icon {
   color: red;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 25px;
   margin-left: 5px;
 }
 
@@ -284,11 +274,6 @@ body {
   font-weight: bold;
 }
 
-
-.expense-label {
-  color: maroon;
-  margin: 4px 0;
-}
 
 .income-text {
   color: green;
@@ -326,7 +311,7 @@ body {
 
 
 .category-select {
-    appearance: none; /* hide default arrow */  /* UPDATED */
+    appearance: none; /* hide default arrow */ 
   background-image: url("data:image/svg+xml,..."); /* minimal arrow icon */
   background-repeat: no-repeat;
   background-position: right 10px center;
@@ -346,7 +331,7 @@ body {
   border-color: #4A90E2;
 }
 
-/* NEW: Input to add new category */
+/*  Input to add new category */
 .new-category-input {
   padding: 8px; margin: 6px 0;
   border-radius: 6px; border: 1px dashed #888;
@@ -354,14 +339,14 @@ body {
   min-width: 140px;
 }
 
-/* NEW: Expense category text display */
+/*  Expense category text display */
 .expense-category-display {
   font-style: italic;
   color: #666;
   margin-left: 4px;
 }
 
-/* NEW: Smooth reveal animation */
+/*  Smooth reveal animation */
 .grid-card, .expense-row {
   animation: fadeIn 0.25s ease-out;
 }
@@ -399,7 +384,7 @@ body[data-theme="dark"] {
 }
 
 
-/* NEW: Styles for income section */
+/*  Styles for income section */
 .income-row {
   display: flex;
   align-items: center;
@@ -429,14 +414,14 @@ body[data-theme="dark"] {
   font-weight: 500;
 }
 
-/* NEW: Add income icon styling */
+/*  Add income icon styling */
 .add-income-icon {
   color: green;
   cursor: pointer;
   margin-top: 4px;
 }
 
-/* NEW: Global summary color coding */
+/*  Global summary color coding */
 .global-income {
   color: green;
 }
@@ -472,9 +457,9 @@ body[data-theme="dark"] {
   }
 }
 
-/* NEW: Delete icon for income */
+/*  Delete icon for income */
 .income-delete-icon {
-  color: crimson;
+  color: red;
   cursor: pointer;
 }
 
@@ -503,7 +488,7 @@ body[data-theme="dark"] {
 }
 
 
-/* NEW: Adjust layout on small devices */
+/*  Adjust layout on small devices */
 @media screen and (max-width: 600px) {
   .expense-row {
     flex-direction: column;
