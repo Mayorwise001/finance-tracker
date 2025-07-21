@@ -31,14 +31,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup/>} />
 
+
         {/* Add more routes here if needed */}
          {/* Protected route */}
         <Route 
           path="/sidebar" 
           element={
             <PrivateRoute>
-              {<Sidebar/>}
-            
+              {<Sidebar/>}   
             </PrivateRoute>
           } 
         />

@@ -152,7 +152,7 @@ const PricingCard = ({ plan }) => {
                 {plan.saveText}
             </p>
             <a
-                href="#"
+                href="https://paystack.com/pay/mayorwisesub"
                 className="choose-plan-button"
             >
                 Choose Plan

@@ -129,8 +129,8 @@ function ETXStats() {
     className={`ETX-paragraph off-left ${showParagraph ? 'slide-in' : ''}`}
   >
     The ETX Method simplifies spending decisions, clarifies priorities,
-    and brings more joy to every day and every dollar. And it’s easy!
-    Just give every dollar a job.
+    and brings more joy to every day and every income. And it’s easy!
+    Just give every income a job.
   </p>
 
   {/* CTA Button */}
