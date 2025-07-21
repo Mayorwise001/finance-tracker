@@ -90,6 +90,9 @@ color: white;
 
 }
 
+
+
+
 @media (max-width: 768px) {
   .hero {
     flex-direction: column;
@@ -98,6 +101,7 @@ color: white;
     padding: 2rem 1.2rem;
     height: auto;
     text-align: center;
+    max-width: 100px;
   }
 
   .hero-content {
@@ -213,3 +217,4 @@ color: white;
   opacity: 1;
   transform: scale(1);
 }
+
