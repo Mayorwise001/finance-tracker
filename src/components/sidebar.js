@@ -13,7 +13,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'; // Fancy Add Expense icon
 import SaveIcon from '@mui/icons-material/Save';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -397,7 +396,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
   </button>
 </div>
         <ul>
-        <li onClick={handleItemClick}><span className="icon"><HomeIcon /></span><span><Link to="/sidebar" className="text link-clean">Home</Link></span></li>
+        <li onClick={handleItemClick}><span className="icon"><HomeIcon /></span><span><Link to="/" className="text link-clean">Home</Link></span></li>
            {/*  'New' menu item opens the dialog */}
           <li onClick={() => setShowDialog(true)}>
             <span className="icon"><NoteAdd /></span>
