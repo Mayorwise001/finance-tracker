@@ -93,7 +93,7 @@
 }
 
 .edit-btn {
-  background-color: #007bff;
+  background-color: #123f25;
   color: white;
 }
 
@@ -111,6 +111,9 @@
   transform: scale(1.03);
   opacity: 0.95;
 }
+
+
+
 
 /* Shift content when sidebar is toggled */
 @media screen and (min-width: 768px) {

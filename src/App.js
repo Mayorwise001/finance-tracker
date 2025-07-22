@@ -10,6 +10,11 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import './index.css'; // Import your global styles
 import ProfilePage from './components/profile';
+import lottie from "lottie-web";
+import { defineElement } from "lord-icon-element";
+
+// This defines the <lord-icon> element
+defineElement(lottie.loadAnimation);
 
 function App() {
   const [theme, setTheme] = useState('light');

@@ -2,7 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import lottie from "lottie-web";
+import { defineElement } from "lord-icon-element";
 
+// This defines the <lord-icon> element
+defineElement(lottie.loadAnimation);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

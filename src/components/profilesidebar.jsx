@@ -9,8 +9,9 @@ import NoteAdd from '@mui/icons-material/NoteAdd';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import 'react-toastify/dist/ReactToastify.css';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
+import introJs from 'intro.js';
+import 'intro.js/introjs.css';
+
 
 const ProfileSidebar = ({ isOpen, toggleSidebar }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -34,15 +35,24 @@ const ProfileSidebar = ({ isOpen, toggleSidebar }) => {
 
       <div className={`sidebar ${isOpen ? 'active' : ''}`}>
         <div className="top-bar">
-          <button
-            className="theme-toggle-btn"
-            onClick={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))}
-          >
-            {theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
-          </button>
+
         </div>
         <ul>
-          <li><span className="icon"><HomeIcon /></span><span><Link to="/" className="text link-clean">Home</Link></span></li>
+            <li><span
+  onClick={() => introJs().start()}
+  className="help-tour-btn text link-clean" 
+ 
+  title="Take a quick tour"
+>
+      <lord-icon
+        src="https://cdn.lordicon.com/msetysan.json"
+  trigger="hover"
+  colors="primary:#ffffff,secondary:#3b82f6"
+  style={{ width: "27px", height: "27px" }}
+></lord-icon>
+  Click here for help
+</span></li>
+          <li><span className="icon"><HomeIcon /></span><span><Link to="/" className="text link-clean"  title="Visit the home page">Home</Link></span></li>
           <li><span className="icon"><NoteAdd /></span><span><Link to="/sidebar" className="text link-clean">Create a New Entry</Link></span></li>
           <li><span className="icon"><PersonIcon /></span><span><Link to="/profile" className="text link-clean">Profile</Link></span></li>
           <li onClick={logout}><span className="icon"><LogoutIcon /></span><span className="text">Logout</span></li>

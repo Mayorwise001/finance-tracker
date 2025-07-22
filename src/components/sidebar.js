@@ -25,6 +25,12 @@ import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import CategoryIcon from '@mui/icons-material/Category';
 import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from 'recharts';
 import EntryHistory from './entryHistory';
+import introJs from 'intro.js';
+import 'intro.js/introjs.css';
+import gsap from 'gsap';  
+import 'lord-icon-element'; // Ensure this is installed and configured properly
+import '../styles/introjs.css'
+
 
 
 
@@ -68,6 +74,56 @@ const handleExpenseFieldChange = (entryIndex, expenseIndex, field, value) => {
   const [categories, setCategories] = useState([
     "Food", "Transport", "Utilities", "Entertainment", "Health", "Education", "Others"
   ]);
+
+useEffect(() => {
+    const hasVisited = localStorage.getItem('hasSeenTutorial');
+
+    if (!hasVisited) {
+      const intro = introJs();
+      intro.setOptions({
+        showProgress: true,
+        showBullets: false,
+        steps: [
+          {
+            element: '#menu-btn',
+            intro: '<div class="tooltip-animated">Click here to toggle the sidebar and access the menu</div>',
+          },
+          {
+            element: '#help-tour-btn',
+            intro: '<div class="tooltip-animated">Click here for help</div>',
+          },
+          {
+            element: '#new-entry-btn',
+            intro: '<div class="tooltip-animated">Click here to add a new entry</div>',
+          },
+          {
+            element: '#profile-btn',
+            intro: '<div class="tooltip-animated">Click here to view your profile</div>',
+          },
+          {
+            element: '#edit-profile-btn',
+            intro: '<div class="tooltip-animated">Click to edit your profile</div>',
+          },
+        ],
+      });
+
+      intro.onafterchange(function () {
+        const tooltip = document.querySelector('.introjs-tooltip');
+        if (tooltip) {
+          gsap.fromTo(
+            tooltip,
+            { opacity: 0, y: -20 },
+            { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }
+          );
+        }
+      });
+
+      intro.start();
+      localStorage.setItem('hasSeenTutorial', 'true');
+    }
+  }, []);
+
+
 
 
 // Handle screen resize for sidebar toggle
@@ -380,7 +436,8 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
      
     <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
 
-      <button className="toggle-btn" onClick={toggleSidebar}>
+      <button className="toggle-btn" onClick={toggleSidebar} id="menu-btn" data-intro="Click here to toggle the sidebar and access the menu" data-step="1" title="Toggle sidebar visibility" aria-label="Toggle sidebar visibility" aria-expanded={isOpen} aria-controls="sidebar-content"
+  >
         ☰
       </button>
 
@@ -390,25 +447,42 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
   <button
     className="theme-toggle-btn"
     onClick={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))}
-  >
+  id='theme-toggle-btn' data-intro="Toggle between light and dark mode" data-step="2" title="Toggle theme mode">
     {theme === 'light' ? <DarkModeIcon /> : <LightModeIcon />}
   </button>
 </div>
         <ul>
+
+                      <li><span
+            onClick={() => introJs().start()}
+            className="help-tour-btn text link-clean" 
+           
+            title="Take a quick tour" id='help-tour-btn' data-intro="Click here for help" data-step="3"
+          >
+                <lord-icon
+                  src="https://cdn.lordicon.com/msetysan.json"
+            trigger="hover"
+            colors="primary:#ffffff,secondary:#3b82f6"
+            style={{ width: "27px", height: "27px" }}
+          ></lord-icon>
+            Click here for help
+          </span></li>
         <li onClick={handleItemClick}><span className="icon"><HomeIcon /></span><span><Link to="/" className="text link-clean">Home</Link></span></li>
            {/*  'New' menu item opens the dialog */}
-          <li onClick={() => setShowDialog(true)}>
+          <li id='new-entry-btn' data-intro="Click here to add a new entry" data-step="4" onClick={() => setShowDialog(true)}>
             <span className="icon"><NoteAdd /></span>
             <span className="text">New</span>
           </li>
-          <li onClick={handleItemClick}><span className="icon"><PersonIcon /></span><span><Link to="/profile" className="text link-clean">Profile </Link></span></li>
+          <li id='profile-btn' data-intro="Click here to view your profile" data-step="5" onClick={handleItemClick}><span className="icon"><PersonIcon /></span><span><Link to="/profile" className="text link-clean">Profile </Link></span></li>
           <li onClick={handleItemClick, logout} ><span className="icon"><LogoutIcon /></span><span onClick={logout} className="text">Logout</span></li>
         </ul>
       </div>
 
       <div className="content">
                <h1>Expense Tracker</h1>
-        <p>Track your incomes and expenses below.</p>
+        <p id='expense-tracker-description' data-intro="This is the expense tracker description: Click on new entry to add a new expense or income. but first add a title then a start date and a end date. afterwards
+        use the edit icon to edit your entries and add your income and expenses, add a category to each expenses and if the
+        category is not listed, you can create a new one. add a new income if theres any." data-step="6">Track your incomes and expenses below.</p>
       {/*  Dialog box for adding new entries */}
         {showDialog && (
           <div className="dialog-overlay">
