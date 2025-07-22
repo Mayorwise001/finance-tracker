@@ -89,6 +89,10 @@ useEffect(() => {
             intro: '<div class="tooltip-animated">Click here to toggle the sidebar and access the menu</div>',
           },
           {
+            element: '#theme-toggle-btn',
+            intro: '<div class="tooltip-animated">Click here to toggle between light and dark mode</div>',
+          },
+          {
             element: '#help-tour-btn',
             intro: '<div class="tooltip-animated">Click here for help</div>',
           },
@@ -101,8 +105,10 @@ useEffect(() => {
             intro: '<div class="tooltip-animated">Click here to view your profile</div>',
           },
           {
-            element: '#edit-profile-btn',
-            intro: '<div class="tooltip-animated">Click to edit your profile</div>',
+            element: 'expense-tracker-description',
+            intro: `<div class="tooltip-animated">This is the expense tracker description: Click on new entry to add a new expense or income. but first add a title then a start date and a end date. afterwards
+        use the edit icon to edit your entries and add your income and expenses, add a category to each expenses and if the
+        category is not listed, you can create a new one. add a new income if theres any.</div>`,
           },
         ],
       });
