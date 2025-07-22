@@ -1,0 +1,104 @@
+/* src/components/ProfileSidebar.css */
+
+.profile-sidebar {
+  width: 240px;
+  background-color: #123f25;
+  color: #fff;
+  height: 100vh;
+  padding-top: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.toggle-button {
+  background-color: #f57c00;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  display: none; /* Hidden by default, shown on mobile */
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+}
+
+.sidebar-menu li {
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid #2a5a3a;
+}
+
+.sidebar-menu li a {
+  text-decoration: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-menu li:hover {
+  background-color: #1e5b3a;
+}
+
+.icon {
+  font-size: 18px;
+}
+
+/* Mobile toggle button */
+.mobile-toggle {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1100;
+  background-color: #f57c00;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Overlay on mobile */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+
+/* Responsive behavior */
+@media screen and (max-width: 768px) {
+  .profile-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .profile-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .mobile-toggle {
+    display: block;
+  }
+}

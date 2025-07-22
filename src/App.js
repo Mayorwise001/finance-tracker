@@ -9,6 +9,7 @@ import Dashboard from './components/dashboard';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import './index.css'; // Import your global styles
+import ProfilePage from './components/profile';
 
 function App() {
   const [theme, setTheme] = useState('light');
@@ -30,6 +31,7 @@ function App() {
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup/>} />
+ 
 
 
         {/* Add more routes here if needed */}
@@ -39,6 +41,14 @@ function App() {
           element={
             <PrivateRoute>
               {<Sidebar/>}   
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path="/profile" 
+          element={
+            <PrivateRoute>
+              {<ProfilePage/>}   
             </PrivateRoute>
           } 
         />

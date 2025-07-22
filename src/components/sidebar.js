@@ -6,7 +6,6 @@ import axios from 'axios';
 // Material UI Icons
 import HomeIcon from '@mui/icons-material/Home';
 import NoteAdd from '@mui/icons-material/NoteAdd';
-import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -402,8 +401,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
             <span className="icon"><NoteAdd /></span>
             <span className="text">New</span>
           </li>
-          <li onClick={handleItemClick}><span className="icon"><SearchIcon /></span><span className="text">Search</span></li>
-          <li onClick={handleItemClick}><span className="icon"><PersonIcon /></span><span className="text">Profile</span></li>
+          <li onClick={handleItemClick}><span className="icon"><PersonIcon /></span><span><Link to="/profile" className="text link-clean">Profile </Link></span></li>
           <li onClick={handleItemClick, logout} ><span className="icon"><LogoutIcon /></span><span onClick={logout} className="text">Logout</span></li>
         </ul>
       </div>
