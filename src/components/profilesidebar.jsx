@@ -54,7 +54,21 @@ const ProfileSidebar = ({ isOpen, toggleSidebar }) => {
 </span></li>
           <li><span className="icon"><HomeIcon /></span><span><Link to="/" className="text link-clean"  title="Visit the home page">Home</Link></span></li>
           <li><span className="icon"><NoteAdd /></span><span><Link to="/sidebar" className="text link-clean">Create a New Entry</Link></span></li>
-          <li><span className="icon"><PersonIcon /></span><span><Link to="/profile" className="text link-clean">Profile</Link></span></li>
+          <li>
+  <span className="icon"><PersonIcon /></span>
+  <span>
+    <Link
+      to="/profile"
+      className="text link-clean"
+      onClick={() => {
+        toggleSidebar(false); // Hide sidebar immediately when Profile is clicked
+      }}
+    >
+      Profile
+    </Link>
+  </span>
+</li>
+
           <li onClick={logout}><span className="icon"><LogoutIcon /></span><span className="text">Logout</span></li>
         </ul>
       </div>

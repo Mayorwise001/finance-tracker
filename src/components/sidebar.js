@@ -479,7 +479,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
             <span className="icon"><NoteAdd /></span>
             <span className="text">New</span>
           </li>
-          <li id='profile-btn' data-intro="Click here to view your profile" data-step="5" onClick={handleItemClick}><span className="icon"><PersonIcon /></span><span><Link to="/profile" className="text link-clean">Profile </Link></span></li>
+          <li  onClick={handleItemClick} id='profile-btn' data-intro="Click here to view your profile" data-step="5"><span className="icon"><PersonIcon /></span><span><Link to="/profile" className="text link-clean">Profile </Link></span></li>
           <li onClick={handleItemClick, logout} ><span className="icon"><LogoutIcon /></span><span onClick={logout} className="text">Logout</span></li>
         </ul>
       </div>
