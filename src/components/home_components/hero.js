@@ -42,7 +42,7 @@ const HeroSection = () => {
         <h1>How will you spend your money life?</h1>
         <p>Create a friendly, flexible plan and spend it well with ETX.</p>
         <Link to="/login" className="cta-button">
-        Start Your Free Trial
+        Start For Free now
       </Link>
         <a href="#pricing" className="buybutton">
           Buy now and save

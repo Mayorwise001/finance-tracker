@@ -462,25 +462,24 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF4560'];
 </div>
         <ul>
 
-                      <li><span
+                      <li
             onClick={() => introJs().start()}
-            className="help-tour-btn text link-clean" 
-           
+    
             title="Take a quick tour" id='help-tour-btn' data-intro="Click here for help" data-step="3"
           >
-                <lord-icon
+              <span className="icon"> <lord-icon
                   src="https://cdn.lordicon.com/msetysan.json"
             trigger="hover"
             colors="primary:#ffffff,secondary:#3b82f6"
             style={{ width: "27px", height: "27px" }}
-          ></lord-icon>
-            Click here for help
-          </span></li>
+          ></lord-icon></span> 
+          <span className="text">Click here for help</span>
+          </li>
         <li onClick={handleItemClick}><span className="icon"><HomeIcon /></span><span><Link to="/" className="text link-clean">Home</Link></span></li>
            {/*  'New' menu item opens the dialog */}
           <li id='new-entry-btn' data-intro="Click here to add a new entry" data-step="4" onClick={() => setShowDialog(true)}>
             <span className="icon"><NoteAdd /></span>
-            <span className="text">New</span>
+            <span className="text">Add New Entry</span>
           </li>
           <li  onClick={handleItemClick} id='profile-btn' data-intro="Click here to view your profile" data-step="5"><span className="icon"><PersonIcon /></span><span><Link to="/profile" className="text link-clean">Profile </Link></span></li>
           <li onClick={handleItemClick, logout} ><span className="icon"><LogoutIcon /></span><span onClick={logout} className="text">Logout</span></li>

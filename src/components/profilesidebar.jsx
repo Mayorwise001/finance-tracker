@@ -39,13 +39,8 @@ const ProfileSidebar = ({ isOpen, toggleSidebar }) => {
         </div>
         <ul>
             <li><span
-  onClick={() => introJs().start()}
-  className="help-tour-btn text link-clean" 
- 
-  title="Take a quick tour"
-
->
-
+  onClick={() => introJs().start()} 
+  title="Take a quick tour" className="icon">
       <lord-icon
         src="https://cdn.lordicon.com/msetysan.json"
   trigger="hover"
@@ -55,11 +50,11 @@ const ProfileSidebar = ({ isOpen, toggleSidebar }) => {
         onClick={() => {
         toggleSidebar(false); // Hide sidebar immediately when Profile is clicked
       }}
-></lord-icon>
+></lord-icon></span>
   <span onClick={() => {
         toggleSidebar(false); // Hide sidebar immediately when Profile is clicked
-      }}>Click here for help</span>
-</span></li>
+      }} className="text link-clean">Click here for help</span>
+</li>
           <li><span className="icon"><HomeIcon /></span><span><Link to="/" className="text link-clean"  title="Visit the home page">Home</Link></span></li>
           <li><span className="icon"><NoteAdd /></span><span><Link to="/sidebar" className="text link-clean">Create a New Entry</Link></span></li>
           <li>
