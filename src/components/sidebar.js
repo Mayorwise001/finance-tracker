@@ -86,7 +86,7 @@ useEffect(() => {
         steps: [
           {
             element: '#menu-btn',
-            intro: '<div class="tooltip-animated">Click here to toggle the sidebar and access the menu</div>',
+            intro: '<div class="tooltip-animated">Click here to toggle the sidebar and access the menu. Click here first to access the remaining guide</div>',
           },
           {
             element: '#theme-toggle-btn',
@@ -113,7 +113,7 @@ useEffect(() => {
         ],
       });
 
-      intro.onafterchange(function () {
+      intro.onafterchange(function (targetElement) {
         const tooltip = document.querySelector('.introjs-tooltip');
         if (tooltip) {
           gsap.fromTo(
@@ -122,6 +122,9 @@ useEffect(() => {
             { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }
           );
         }
+     if (targetElement?.id === 'expense-tracker-description') {
+        setIsOpen(false); // Close the sidebar during this step
+      }
       });
 
       intro.start();

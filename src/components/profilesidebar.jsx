@@ -43,14 +43,22 @@ const ProfileSidebar = ({ isOpen, toggleSidebar }) => {
   className="help-tour-btn text link-clean" 
  
   title="Take a quick tour"
+
 >
+
       <lord-icon
         src="https://cdn.lordicon.com/msetysan.json"
   trigger="hover"
   colors="primary:#ffffff,secondary:#3b82f6"
   style={{ width: "27px", height: "27px" }}
+
+        onClick={() => {
+        toggleSidebar(false); // Hide sidebar immediately when Profile is clicked
+      }}
 ></lord-icon>
-  Click here for help
+  <span onClick={() => {
+        toggleSidebar(false); // Hide sidebar immediately when Profile is clicked
+      }}>Click here for help</span>
 </span></li>
           <li><span className="icon"><HomeIcon /></span><span><Link to="/" className="text link-clean"  title="Visit the home page">Home</Link></span></li>
           <li><span className="icon"><NoteAdd /></span><span><Link to="/sidebar" className="text link-clean">Create a New Entry</Link></span></li>
